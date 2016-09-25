@@ -3,33 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public class Target
-{
-    private string[] inputs = new string[0];
-    private string[] outputs = new string[0];
-    private string[] dependOn = new string[0];
-
-    public string[] Inputs
-    {
-        get { return this.inputs; }
-        set { this.inputs = value ?? new string[0]; }
-    }
-
-    public string[] Outputs
-    {
-        get { return this.outputs; }
-        set { this.outputs = value ?? new string[0]; }
-    }
-
-    public string[] DependOn
-    {
-        get { return this.dependOn; }
-        set { this.dependOn = value ?? new string[0]; }
-    }
-
-    public Action Do { get; set; }
-}
-
 public static void Run(IList<string> args, IDictionary<string, Target> targets)
 {
     foreach (var option in args.Where(arg => arg.StartsWith("-", StringComparison.Ordinal)))
@@ -119,4 +92,31 @@ public static void RunTarget(string name, IDictionary<string, Target> targets, I
             throw;
         }
     }
+}
+
+public class Target
+{
+    private string[] inputs = new string[0];
+    private string[] outputs = new string[0];
+    private string[] dependOn = new string[0];
+
+    public string[] Inputs
+    {
+        get { return this.inputs; }
+        set { this.inputs = value ?? new string[0]; }
+    }
+
+    public string[] Outputs
+    {
+        get { return this.outputs; }
+        set { this.outputs = value ?? new string[0]; }
+    }
+
+    public string[] DependOn
+    {
+        get { return this.dependOn; }
+        set { this.dependOn = value ?? new string[0]; }
+    }
+
+    public Action Do { get; set; }
 }
