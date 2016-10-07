@@ -8,12 +8,12 @@ Simple target runner for use in C# scripts.
 
 ### Quickstart
 
-* Install the [NuGet package](https://www.nuget.org/packages/simple-targets-csharp).
-* Create a C# script named `build.csx` and the following code:
+* Install (or download and unzip) the [NuGet package](https://www.nuget.org/packages/simple-targets-csharp).
+* Create a C# script named `build.csx` and add the following code:
 ```C#
-#load "packages/simple-targets-csharp.1.1.0/simple-targets-csharp.csx"
+#load "packages/simple-targets-csharp.1.1.0/simple-targets-csharp.csx" // change the path as required
 
-var targets = new Dictionary<string, Target>
+var targets = new Dictionary<string, Target>();
 
 targets.Add("default", new Target { Do = () => Console.WriteLine("Hello, world!"), });
 
@@ -23,8 +23,8 @@ Run(Args, targets);
 
 ### Runners
 
-* [csi.exe](https://msdn.microsoft.com/en-us/magazine/mt614271.aspx) - Microsoft's "C# REPL Command-Line Interface". This is bundled with MSBuild 14 (and Visual Studio 2015) onwards so it's a good choice if you are using simple-targets-csharp to build a .NET project, since that will already likely have a dependency on MSBuild.
-* [Dude](https://github.com/adamralph/dude) - the portable C# script runner (csi.exe conveniently repackaged as a single self-contained exe). This is a good choice if you don't want to have a dependency on MSBuild. `dude.exe` can easily be downloaded and cached by a bootstrap command (simliar to `NuGet.exe` in the example below).
+* [csi.exe](https://msdn.microsoft.com/en-us/magazine/mt614271.aspx) - Microsoft's "C# REPL Command-Line Interface". This is bundled with MSBuild 14 (and Visual Studio 2015) onwards so it's a good choice if you are using simple-targets-csharp to write a build script for a .NET project, since the project will already likely have a dependency on MSBuild.
+* [Dude](https://github.com/adamralph/dude) - the portable C# script runner (csi.exe conveniently repackaged as a single self-contained exe). This is a good choice if you don't want or need to have a dependency on MSBuild. `dude.exe` can easily be downloaded and cached by a bootstrap command (simliar to `NuGet.exe` in the example below).
 
 Other C# script runners such as [scriptcs](http://scriptcs.net/) should also work.
 
@@ -33,7 +33,7 @@ Other C# script runners such as [scriptcs](http://scriptcs.net/) should also wor
 xBehave.net uses a [bootstrap command](https://github.com/xbehave/xbehave.net/blob/dev/build.cmd) to
 
 * Download and cache `NuGet.exe`
-* Restore packages (including simple-targets-csharp)
+* Restore NuGet packages (including simple-targets-csharp)
 * Execute it's [build script](https://github.com/xbehave/xbehave.net/blob/dev/build.csx) using csi.exe
 
 ---
