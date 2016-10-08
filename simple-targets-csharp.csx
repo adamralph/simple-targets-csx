@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 public static void Run(IList<string> args, IDictionary<string, Target> targets)
@@ -67,16 +66,7 @@ public static void RunTarget(string name, IDictionary<string, Target> targets, I
 
     targetsRan.Add(name);
 
-    var outputs = target.Outputs ?? Enumerable.Empty<string>();
-    if (outputs.Any() && !outputs.Any(output => !File.Exists(output)))
-    {
-        Console.WriteLine($"Skipping target '{name}' since all outputs are present.");
-        return;
-    }
-
-    foreach (var dependency in target.DependOn
-        .Concat(targets.Where(t => t.Value.Outputs.Intersect(target.Inputs).Any()).Select(t => t.Key))
-        .Except(targetsRan))
+    foreach (var dependency in target.DependOn.Except(targetsRan))
     {
         RunTarget(dependency, targets, targetsRan);
     }
@@ -98,21 +88,7 @@ public static void RunTarget(string name, IDictionary<string, Target> targets, I
 
 public class Target
 {
-    private string[] inputs = new string[0];
-    private string[] outputs = new string[0];
     private string[] dependOn = new string[0];
-
-    public string[] Inputs
-    {
-        get { return this.inputs; }
-        set { this.inputs = value ?? new string[0]; }
-    }
-
-    public string[] Outputs
-    {
-        get { return this.outputs; }
-        set { this.outputs = value ?? new string[0]; }
-    }
 
     public string[] DependOn
     {
