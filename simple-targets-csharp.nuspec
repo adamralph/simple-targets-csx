@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>simple-targets-csharp</id>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
     <authors>Adam Ralph, simple-targets-csharp contributors</authors>
     <licenseUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csharp/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/adamralph/simple-targets-csharp</projectUrl>
@@ -14,5 +14,6 @@
   </metadata>
   <files>
     <file src="simple-targets-csharp.csx" />
+    <file src="internal/runner.csx" />
   </files>
 </package>
