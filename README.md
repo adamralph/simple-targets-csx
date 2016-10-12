@@ -1,4 +1,4 @@
-![Icon](/simple-targets-csharp.png)
+![Icon](/assets/simple-targets-csharp.png)
 
 # simple-targets-csharp
 
