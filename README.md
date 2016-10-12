@@ -11,7 +11,7 @@ Simple target runner for use in C# scripts.
 * Install (or download and unzip) the [NuGet package](https://www.nuget.org/packages/simple-targets-csharp).
 * Create a C# script named `build.csx` and add the following code:
 ```C#
-#load "packages/simple-targets-csharp.2.0.0/simple-targets-csharp.csx" // change the path as required
+#load "packages/simple-targets-csharp.3.0.0/simple-targets-csharp.csx" // change the path as required
 
 var targets = new Dictionary<string, Target>();
 
