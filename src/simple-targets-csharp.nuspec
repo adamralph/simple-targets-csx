@@ -6,14 +6,14 @@
     <authors>Adam Ralph, simple-targets-csharp contributors</authors>
     <licenseUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csharp/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/adamralph/simple-targets-csharp</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csharp/master/simple-targets-csharp.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csharp/master/assets/simple-targets-csharp.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Simple target runner for use in C# scripts.</description>
     <releaseNotes>https://github.com/adamralph/simple-targets-csharp/releases</releaseNotes>
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
-    <file src="simple-targets-csharp.csx" />
     <file src="internal/runner.csx" />
+    <file src="simple-targets-csharp.csx" />
   </files>
 </package>
