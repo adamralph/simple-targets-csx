@@ -24,4 +24,4 @@ if not exist .nuget\NuGet.exe (
 
 :: build package
 mkdir artifacts
-.nuget\NuGet.exe pack simple-targets-csharp.nuspec -OutputDirectory artifacts
+.nuget\NuGet.exe pack src/simple-targets-csharp.nuspec -OutputDirectory artifacts
