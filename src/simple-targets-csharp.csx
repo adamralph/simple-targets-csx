@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public static void Run(IList<string> args, IDictionary<string, Target> targets)
 {
-    SimpleTargetsCSharpRunner.Run(args, targets);
+    SimpleTargetsCSharpRunner.Run(args, targets, Console.Out);
 }
 
 public class Target

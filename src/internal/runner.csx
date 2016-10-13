@@ -1,12 +1,12 @@
 #load "target-runner.csx"
 
-using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 public static class SimpleTargetsCSharpRunner
 {
-    public static void Run(IList<string> args, IDictionary<string, Target> targets)
+    public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
     {
         foreach (var option in args.Where(arg => arg.StartsWith("-", StringComparison.Ordinal)))
         {
@@ -15,31 +15,31 @@ public static class SimpleTargetsCSharpRunner
                 case "-H":
                 case "-h":
                 case "-?":
-                    Console.WriteLine("Usage: <script-runner> <script-file> [<options>] [<targets>]");
-                    Console.WriteLine();
-                    Console.WriteLine("script-runner: A C# script runner. E.g. csi.exe.");
-                    Console.WriteLine();
-                    Console.WriteLine("script-file: Path to a script.");
-                    Console.WriteLine();
-                    Console.WriteLine("options:");
-                    Console.WriteLine(" -T      Display the targets, then exit");
-                    Console.WriteLine();
-                    Console.WriteLine("targets: A list of targets to run. If not specified, 'default' target will be run.");
-                    Console.WriteLine();
-                    Console.WriteLine("Examples:");
-                    Console.WriteLine("  csi.exe build.csx");
-                    Console.WriteLine("  csi.exe build.csx -T");
-                    Console.WriteLine("  csi.exe build.csx test package");
+                    output.WriteLine("Usage: <script-runner> <script-file> [<options>] [<targets>]");
+                    output.WriteLine();
+                    output.WriteLine("script-runner: A C# script runner. E.g. csi.exe.");
+                    output.WriteLine();
+                    output.WriteLine("script-file: Path to a script.");
+                    output.WriteLine();
+                    output.WriteLine("options:");
+                    output.WriteLine(" -T      Display the targets, then exit");
+                    output.WriteLine();
+                    output.WriteLine("targets: A list of targets to run. If not specified, 'default' target will be run.");
+                    output.WriteLine();
+                    output.WriteLine("Examples:");
+                    output.WriteLine("  csi.exe build.csx");
+                    output.WriteLine("  csi.exe build.csx -T");
+                    output.WriteLine("  csi.exe build.csx test package");
                     return;
                 case "-T":
                     foreach (var target in targets)
                     {
-                        Console.WriteLine(target.Key);
+                        output.WriteLine(target.Key);
                     }
 
                     return;
                 default:
-                    Console.WriteLine($"Unknown option '{option}'.");
+                    output.WriteLine($"Unknown option '{option}'.");
                     return;
             }
         }
@@ -50,9 +50,9 @@ public static class SimpleTargetsCSharpRunner
             targetNames.Add("default");
         }
 
-        SimpleTargetsCSharpTargetRunner.Run(targetNames, targets);
+        SimpleTargetsCSharpTargetRunner.Run(targetNames, targets, output);
 
-        Console.WriteLine(
+        output.WriteLine(
             $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.");
     }
 }

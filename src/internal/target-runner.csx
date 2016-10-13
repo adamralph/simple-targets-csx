@@ -4,16 +4,16 @@ using System.Linq;
 
 public static class SimpleTargetsCSharpTargetRunner
 {
-    public static void Run(IList<string> targetNames, IDictionary<string, Target> targets)
+    public static void Run(IList<string> targetNames, IDictionary<string, Target> targets, TextWriter output)
     {
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            RunTarget(name, targets, targetsRan);
+            RunTarget(name, targets, targetsRan, output);
         }
     }
 
-    private static void RunTarget(string name, IDictionary<string, Target> targets, ISet<string> targetsRan)
+    private static void RunTarget(string name, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output)
     {
         Target target;
         if (!targets.TryGetValue(name, out target))
@@ -25,19 +25,19 @@ public static class SimpleTargetsCSharpTargetRunner
 
         foreach (var dependency in target.DependOn.Except(targetsRan))
         {
-            RunTarget(dependency, targets, targetsRan);
+            RunTarget(dependency, targets, targetsRan, output);
         }
 
         if (target.Do != null)
         {
-            Console.WriteLine($"Running target '{name}'...");
+            output.WriteLine($"Running target '{name}'...");
             try
             {
                 target.Do.Invoke();
             }
             catch (Exception)
             {
-                Console.WriteLine($"Target '{name}' failed!");
+                output.WriteLine($"Target '{name}' failed!");
                 throw;
             }
         }
