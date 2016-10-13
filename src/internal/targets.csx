@@ -6,7 +6,7 @@ public static class SimpleTargetsCSharpTargets
 {
     public static void Display(IDictionary<string, Target> targets, TextWriter output)
     {
-        foreach (var target in targets)
+        foreach (var target in targets.OrderBy(pair => pair.Key))
         {
             output.WriteLine(target.Key);
         }
