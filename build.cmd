@@ -25,3 +25,9 @@ if not exist .nuget\NuGet.exe (
 :: build package
 mkdir artifacts
 .nuget\NuGet.exe pack src/simple-targets-csharp.nuspec -OutputDirectory artifacts
+
+:: smoke test compilation
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command "If (Test-Path .\artifacts\files\) { Remove-Item .\artifacts\files\ -Recurse -Force }"
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command "Get-ChildItem .\artifacts\ -Filter *.nupkg | Select-Object -First 1 | foreach { Copy-Item $_.FullName .\artifacts\files.zip -Force }"
+@powershell -NoProfile -ExecutionPolicy unrestricted -Command "Expand-Archive .\artifacts\files.zip -DestinationPath .\artifacts\files"
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\artifacts\files\simple-targets-csharp.csx
