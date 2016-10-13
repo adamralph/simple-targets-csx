@@ -36,11 +36,11 @@ public static class SimpleTargetsCSharpRunner
                     output.WriteLine("  csi.exe build.csx -T");
                     output.WriteLine("  csi.exe build.csx test package");
                     return;
-                case "-T":
-                    SimpleTargetsCSharpTargets.Display(targets, output);
-                    return;
                 case "-D":
                     SimpleTargetsCSharpTargets.DisplayWithDependencies(targets, output);
+                    return;
+                case "-T":
+                    SimpleTargetsCSharpTargets.Display(targets, output);
                     return;
                 case "-n":
                     dryRun = true;
