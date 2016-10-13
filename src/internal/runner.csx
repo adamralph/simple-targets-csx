@@ -1,4 +1,5 @@
 #load "target-runner.csx"
+#load "targets.csx"
 
 using System.Collections.Generic;
 using System.IO;
@@ -32,11 +33,7 @@ public static class SimpleTargetsCSharpRunner
                     output.WriteLine("  csi.exe build.csx test package");
                     return;
                 case "-T":
-                    foreach (var target in targets)
-                    {
-                        output.WriteLine(target.Key);
-                    }
-
+                    SimpleTargetsCSharpTargets.Display(targets, output);
                     return;
                 default:
                     output.WriteLine($"Unknown option '{option}'.");
