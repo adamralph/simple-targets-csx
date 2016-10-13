@@ -23,6 +23,7 @@ public static class SimpleTargetsCSharpRunner
                     output.WriteLine("script-file: Path to a script.");
                     output.WriteLine();
                     output.WriteLine("options:");
+                    output.WriteLine(" -D      Display the targets and dependencies, then exit");
                     output.WriteLine(" -T      Display the targets, then exit");
                     output.WriteLine();
                     output.WriteLine("targets: A list of targets to run. If not specified, 'default' target will be run.");
@@ -34,6 +35,9 @@ public static class SimpleTargetsCSharpRunner
                     return;
                 case "-T":
                     SimpleTargetsCSharpTargets.Display(targets, output);
+                    return;
+                case "-D":
+                    SimpleTargetsCSharpTargets.DisplayWithDependencies(targets, output);
                     return;
                 default:
                     output.WriteLine($"Unknown option '{option}'.");
