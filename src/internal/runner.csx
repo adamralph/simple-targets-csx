@@ -9,6 +9,8 @@ public static class SimpleTargetsCSharpRunner
 {
     public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
     {
+        var dryRun = false;
+
         foreach (var option in args.Where(arg => arg.StartsWith("-", StringComparison.Ordinal)))
         {
             switch (option)
@@ -25,6 +27,7 @@ public static class SimpleTargetsCSharpRunner
                     output.WriteLine("options:");
                     output.WriteLine(" -D      Display the targets and dependencies, then exit");
                     output.WriteLine(" -T      Display the targets, then exit");
+                    output.WriteLine(" -n      Do a dry run without executing actions");
                     output.WriteLine();
                     output.WriteLine("targets: A list of targets to run. If not specified, 'default' target will be run.");
                     output.WriteLine();
@@ -39,6 +42,9 @@ public static class SimpleTargetsCSharpRunner
                 case "-D":
                     SimpleTargetsCSharpTargets.DisplayWithDependencies(targets, output);
                     return;
+                case "-n":
+                    dryRun = true;
+                    break;
                 default:
                     output.WriteLine($"Unknown option '{option}'.");
                     return;
@@ -51,9 +57,9 @@ public static class SimpleTargetsCSharpRunner
             targetNames.Add("default");
         }
 
-        SimpleTargetsCSharpTargetRunner.Run(targetNames, targets, output);
+        SimpleTargetsCSharpTargetRunner.Run(targetNames, dryRun, targets, output);
 
         output.WriteLine(
-            $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.");
+            $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}");
     }
 }

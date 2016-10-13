@@ -4,16 +4,16 @@ using System.Linq;
 
 public static class SimpleTargetsCSharpTargetRunner
 {
-    public static void Run(IList<string> targetNames, IDictionary<string, Target> targets, TextWriter output)
+    public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output)
     {
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            RunTarget(name, targets, targetsRan, output);
+            RunTarget(name, dryRun, targets, targetsRan, output);
         }
     }
 
-    private static void RunTarget(string name, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output)
+    private static void RunTarget(string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output)
     {
         Target target;
         if (!targets.TryGetValue(name, out target))
@@ -25,20 +25,23 @@ public static class SimpleTargetsCSharpTargetRunner
 
         foreach (var dependency in target.DependOn.Except(targetsRan))
         {
-            RunTarget(dependency, targets, targetsRan, output);
+            RunTarget(dependency, dryRun, targets, targetsRan, output);
         }
 
         if (target.Do != null)
         {
-            output.WriteLine($"Running target '{name}'...");
-            try
+            output.WriteLine($"Running target '{name}'...{(dryRun ? " (dry run)" : "")}");
+            if (!dryRun)
             {
-                target.Do.Invoke();
-            }
-            catch (Exception)
-            {
-                output.WriteLine($"Target '{name}' failed!");
-                throw;
+                try
+                {
+                    target.Do.Invoke();
+                }
+                catch (Exception)
+                {
+                    output.WriteLine($"Target '{name}' failed!");
+                    throw;
+                }
             }
         }
     }
