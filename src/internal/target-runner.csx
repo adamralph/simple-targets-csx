@@ -14,7 +14,8 @@ public static class SimpleTargetsTargetRunner
         }
     }
 
-    private static void RunTarget(string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output)
+    private static void RunTarget(
+        string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output)
     {
         Target target;
         if (!targets.TryGetValue(name, out target))
