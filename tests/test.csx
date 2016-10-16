@@ -2,14 +2,14 @@
 
 using static SimpleTargets;
 
-var targets = new Dictionary<string, Target>();
+var targets = new TargetDictionary();
 
-targets.Add("default", new Target(DependsOn("world", "exclaim")));
+targets.Add("default", DependsOn("world", "exclaim"));
 
-targets.Add("hello", new Target(() => Console.WriteLine("Hello, ")));
+targets.Add("hello", () => Console.WriteLine("Hello, "));
 
-targets.Add("world", new Target(DependsOn("hello"), () => Console.WriteLine("World")));
+targets.Add("world", DependsOn("hello"), () => Console.WriteLine("World"));
 
-targets.Add("exclaim", new Target(() => Console.WriteLine("!")));
+targets.Add("exclaim", () => Console.WriteLine("!"));
 
 Run(Args, targets);

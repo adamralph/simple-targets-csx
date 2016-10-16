@@ -2,8 +2,8 @@
 
 using static SimpleTargets;
 
-var targets = new Dictionary<string, Target>();
+var targets = new TargetDictionary();
 
-targets.Add("default", new Target(() => Console.WriteLine("Hello, world!")));
+targets.Add("default", () => Console.WriteLine("Hello, world!"));
 
 Run(Args, targets);

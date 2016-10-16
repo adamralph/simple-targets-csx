@@ -33,4 +33,16 @@ public static class SimpleTargets
 
         public Action Action { get; }
     }
+
+    public class TargetDictionary : Dictionary<string, Target>
+    {
+        public void Add(string name, IEnumerable<string> dependencies, Action action) =>
+            this.Add(name, new Target(dependencies, action));
+
+        public void Add(string name, IEnumerable<string> dependencies) =>
+            this.Add(name, new Target(dependencies, null));
+
+        public void Add(string name, Action action) =>
+            this.Add(name, new Target(null, action));
+    }
 }
