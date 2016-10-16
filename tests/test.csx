@@ -1,5 +1,7 @@
 #load "../artifacts/files/simple-targets-csharp.csx"
 
+using static SimpleTargets;
+
 var targets = new Dictionary<string, Target>();
 
 targets.Add("default", new Target(new[] { "world", "exclaim" }));
