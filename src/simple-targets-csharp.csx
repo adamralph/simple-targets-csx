@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 public static void Run(IList<string> args, IDictionary<string, Target> targets)
 {
-    SimpleTargetsCSharpRunner.Run(args, targets, Console.Out);
+    SimpleTargetsRunner.Run(args, targets, Console.Out);
 }
 
 public class Target

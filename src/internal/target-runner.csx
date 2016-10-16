@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public static class SimpleTargetsCSharpTargetRunner
+public static class SimpleTargetsTargetRunner
 {
     public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output)
     {

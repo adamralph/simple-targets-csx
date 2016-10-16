@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public static class SimpleTargetsCSharpTargets
+public static class SimpleTargetsTargets
 {
     public static void Display(IDictionary<string, Target> targets, TextWriter output)
     {
