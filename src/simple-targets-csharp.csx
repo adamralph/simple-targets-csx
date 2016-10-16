@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 public static void Run(IList<string> args, IDictionary<string, Target> targets)
 {
@@ -10,13 +11,23 @@ public static void Run(IList<string> args, IDictionary<string, Target> targets)
 
 public class Target
 {
-    private string[] dependOn = new string[0];
-
-    public string[] DependOn
+    public Target(IEnumerable<string> dependencies)
+        : this(dependencies, null)
     {
-        get { return this.dependOn; }
-        set { this.dependOn = value ?? new string[0]; }
     }
 
-    public Action Do { get; set; }
+    public Target(Action action)
+        : this(null, action)
+    {
+    }
+
+    public Target(IEnumerable<string> dependencies, Action action)
+    {
+        this.Dependencies = new ReadOnlyCollection<string>(dependencies?.ToList() ?? new List<string>());
+        this.Action = action;
+    }
+
+    public IReadOnlyList<string> Dependencies { get; }
+
+    public Action Action { get; }
 }
