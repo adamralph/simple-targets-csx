@@ -17,7 +17,7 @@ public static class SimpleTargetsCSharpTargets
         foreach (var target in targets.OrderBy(pair => pair.Key))
         {
             output.WriteLine(target.Key);
-            foreach (var dependency in target.Value.DependOn)
+            foreach (var dependency in target.Value.Dependencies)
             {
                 output.WriteLine("  " + dependency);
             }

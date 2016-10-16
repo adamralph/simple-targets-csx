@@ -23,19 +23,19 @@ public static class SimpleTargetsCSharpTargetRunner
 
         targetsRan.Add(name);
 
-        foreach (var dependency in target.DependOn.Except(targetsRan))
+        foreach (var dependency in target.Dependencies.Except(targetsRan))
         {
             RunTarget(dependency, dryRun, targets, targetsRan, output);
         }
 
-        if (target.Do != null)
+        if (target.Action != null)
         {
             output.WriteLine($"Running target '{name}'...{(dryRun ? " (dry run)" : "")}");
             if (!dryRun)
             {
                 try
                 {
-                    target.Do.Invoke();
+                    target.Action.Invoke();
                 }
                 catch (Exception)
                 {
