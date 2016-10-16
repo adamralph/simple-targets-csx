@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-public static class SimpleTargetsCSharpRunner
+public static class SimpleTargetsRunner
 {
     public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
     {
@@ -37,10 +37,10 @@ public static class SimpleTargetsCSharpRunner
                     output.WriteLine("  csi.exe build.csx test package");
                     return;
                 case "-D":
-                    SimpleTargetsCSharpTargets.DisplayWithDependencies(targets, output);
+                    SimpleTargetsTargets.DisplayWithDependencies(targets, output);
                     return;
                 case "-T":
-                    SimpleTargetsCSharpTargets.Display(targets, output);
+                    SimpleTargetsTargets.Display(targets, output);
                     return;
                 case "-n":
                     dryRun = true;
@@ -57,7 +57,7 @@ public static class SimpleTargetsCSharpRunner
             targetNames.Add("default");
         }
 
-        SimpleTargetsCSharpTargetRunner.Run(targetNames, dryRun, targets, output);
+        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output);
 
         output.WriteLine(
             $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}");
