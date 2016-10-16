@@ -6,10 +6,8 @@ using System.Collections.ObjectModel;
 
 public static class SimpleTargets
 {
-    public static void Run(IList<string> args, IDictionary<string, SimpleTargets.Target> targets)
-    {
+    public static void Run(IList<string> args, IDictionary<string, SimpleTargets.Target> targets) =>
         SimpleTargetsRunner.Run(args, targets, Console.Out);
-    }
 
     public class Target
     {
