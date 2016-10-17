@@ -36,7 +36,7 @@ xBehave.net uses a [bootstrap command](https://github.com/xbehave/xbehave.net/bl
 
 * Download and cache `NuGet.exe`
 * Restore NuGet packages (including simple-targets-csharp)
-* Execute it's [build script](https://github.com/xbehave/xbehave.net/blob/dev/build.csx) using csi.exe
+* Execute its [build script](https://github.com/xbehave/xbehave.net/blob/dev/build.csx) using csi.exe
 
 ---
 
