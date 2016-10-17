@@ -28,7 +28,7 @@ Run(Args, targets);
 * [csi.exe](https://msdn.microsoft.com/en-us/magazine/mt614271.aspx) - Microsoft's "C# REPL Command-Line Interface". This is bundled with MSBuild 14 (and Visual Studio 2015) onwards so it's a good choice if you are using simple-targets-csharp to write a build script for a .NET project, since the project will already likely have a dependency on MSBuild.
 * [Dude](https://github.com/adamralph/dude) - the portable C# script runner (csi.exe conveniently repackaged as a single self-contained exe). This is a good choice if you don't want or need to have a dependency on MSBuild. `dude.exe` can easily be downloaded and cached by a bootstrap command (simliar to `NuGet.exe` in the example below).
 
-Other C# script runners such as [scriptcs](http://scriptcs.net/) should also work.
+Other C# script runners such as [dotnet-script](https://github.com/filipw/dotnet-script) should also work.
 
 ### Examples
 
