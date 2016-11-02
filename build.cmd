@@ -24,7 +24,7 @@ if not exist .nuget\NuGet.exe (
 
 :: build package
 mkdir artifacts
-.nuget\NuGet.exe pack src/simple-targets-csharp.nuspec -OutputDirectory artifacts
+.nuget\NuGet.exe pack src/simple-targets-csx.nuspec -OutputDirectory artifacts
 
 :: run tests
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "If (Test-Path .\artifacts\files\) { Remove-Item .\artifacts\files\ -Recurse -Force }"
