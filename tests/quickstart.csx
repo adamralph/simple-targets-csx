@@ -1,4 +1,4 @@
-#load "../artifacts/files/simple-targets-csx.csx"
+#load "../artifacts/files/simple-targets.csx"
 
 using static SimpleTargets;
 

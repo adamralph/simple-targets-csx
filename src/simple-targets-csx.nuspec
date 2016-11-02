@@ -16,6 +16,6 @@
     <file src="internal/runner.csx"         target="internal/runner.csx" />
     <file src="internal/target-runner.csx"  target="internal/target-runner.csx" />
     <file src="internal/targets.csx"        target="internal/targets.csx" />
-    <file src="simple-targets-csx.csx"   target="simple-targets-csx.csx" />
+    <file src="simple-targets.csx"          target="simple-targets.csx" />
   </files>
 </package>
