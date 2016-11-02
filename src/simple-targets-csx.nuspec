@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>simple-targets-csx</id>
+    <version>5.0.0</version>
+    <authors>Adam Ralph, simple-targets-csx contributors</authors>
+    <licenseUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csx/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/adamralph/simple-targets-csx</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csx/master/assets/simple-targets-csx.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Simple target runner for use in C# scripts.</description>
+    <releaseNotes>https://github.com/adamralph/simple-targets-csx/releases</releaseNotes>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+  <files>
+    <file src="internal/runner.csx"         target="internal/runner.csx" />
+    <file src="internal/target-runner.csx"  target="internal/target-runner.csx" />
+    <file src="internal/targets.csx"        target="internal/targets.csx" />
+    <file src="simple-targets-csx.csx"   target="simple-targets-csx.csx" />
+  </files>
+</package>
