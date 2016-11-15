@@ -25,6 +25,17 @@ Run(Args, targets);
 ```
 * Run `"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\build.csx` (or use one of the other runners listed below).
 
+### Usage
+
+| Action                        | Command                                                                             |
+|-------------------------------|-------------------------------------------------------------------------------------|
+| Run a specific target         | `{runner} .\build.csx targetname`                                                   |
+| Run multiple targets          | `{runner} .\build.csx target1name target2name`                                      |
+| List targets                  | `{runner} .\build.csx -T`                                                           |
+| List targets and dependencies | `{runner} .\build.csx -D`                                                           |
+| Dry run                       | Append `-n`, e.g. `{runner} .\build.csx -n` or `{runner} .\build.csx targetname -n` |
+| Show full usage details       | `{runner} .\build.csx targetname -?`                                                |
+
 ### Runners
 
 * [csi.exe](https://msdn.microsoft.com/en-us/magazine/mt614271.aspx) - Microsoft's "C# REPL Command-Line Interface". This is bundled with MSBuild 14 (and Visual Studio 2015) onwards so it's a good choice if you are using simple-targets-csx to write a build script for a .NET project, since the project will already likely have a dependency on MSBuild.
