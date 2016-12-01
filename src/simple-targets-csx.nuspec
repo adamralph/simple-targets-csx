@@ -8,6 +8,7 @@
     <projectUrl>https://github.com/adamralph/simple-targets-csx</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csx/master/assets/simple-targets-csx.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>A minimalist target runner for C# scripts.</summary>
     <description>A minimalist C# script library for writing targets for building, analysing, testing, packaging, deploying, etc. and running them using any runner which supports the "standard" C# script dialect (as defined by csi.exe).
 
 In no way restricted to writing targets related to .NET projects.
