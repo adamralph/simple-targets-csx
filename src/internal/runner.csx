@@ -1,13 +1,18 @@
 #load "target-runner.csx"
 #load "targets.csx"
+#load "team-city.csx"
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static SimpleTargets;
+using static SimpleTargetsTeamCity;
 
 public static class SimpleTargetsRunner
 {
+    private static readonly bool isTeamCity = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_VERSION"));
+
     public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
     {
         var dryRun = false;
@@ -58,9 +63,16 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
-        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output);
+        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, isTeamCity);
 
-        output.WriteLine(
-            $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}");
+        var message =
+            $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}";
+
+        if (isTeamCity)
+        {
+            message = $"##teamcity[message text='{Encode(message)}' status='NORMAL']";
+        }
+        
+        output.WriteLine(message);
     }
 }
