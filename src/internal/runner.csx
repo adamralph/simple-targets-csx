@@ -11,11 +11,10 @@ using static SimpleTargetsTeamCity;
 
 public static class SimpleTargetsRunner
 {
-    private static readonly bool isTeamCity = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_VERSION"));
-
     public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
     {
         var dryRun = false;
+        var isTeamCity = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TEAMCITY_VERSION"));
 
         foreach (var option in args.Where(arg => arg.StartsWith("-", StringComparison.Ordinal)))
         {
@@ -34,6 +33,7 @@ public static class SimpleTargetsRunner
                     output.WriteLine(" -D      Display the targets and dependencies, then exit");
                     output.WriteLine(" -T      Display the targets, then exit");
                     output.WriteLine(" -n      Do a dry run without executing actions");
+                    output.WriteLine(" -t      Forces TeamCity mode (normally auto-detected)");
                     output.WriteLine();
                     output.WriteLine("targets: A list of targets to run. If not specified, 'default' target will be run.");
                     output.WriteLine();
@@ -50,6 +50,9 @@ public static class SimpleTargetsRunner
                     return;
                 case "-n":
                     dryRun = true;
+                    break;
+                case "-t":
+                    isTeamCity = true;
                     break;
                 default:
                     output.WriteLine($"Unknown option '{option}'.");
