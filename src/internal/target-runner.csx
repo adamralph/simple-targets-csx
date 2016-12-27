@@ -36,12 +36,7 @@ public static class SimpleTargetsTargetRunner
         if (target.Action != null)
         {
             var message = $"Running target '{name}'...{(dryRun ? " (dry run)" : "")}";
-            if (isTeamCity)
-            {
-                message = $"##teamcity[blockOpened name='{name}' description='{Encode(message)}']";
-            }
-            
-            output.WriteLine(message);
+            output.WriteLine(isTeamCity ? BlockOpened(name, message) : message);
 
             try
             {
@@ -54,13 +49,7 @@ public static class SimpleTargetsTargetRunner
                     catch (Exception)
                     {
                         message = $"Target '{name}' failed!";
-
-                        if (isTeamCity)
-                        {
-                            message = $"##teamcity[message text='{Encode(message)}' status='ERROR']";
-                        }
-
-                        output.WriteLine(message);
+                        output.WriteLine(isTeamCity ? ErrorMessage(message) : message);
                         throw;
                     }
                 }
@@ -69,7 +58,7 @@ public static class SimpleTargetsTargetRunner
             {
                 if (isTeamCity)
                 {
-                    output.WriteLine($"##teamcity[blockClosed name='{name}']");
+                    output.WriteLine(BlockClosed(name));
                 }
             }
         }

@@ -36,3 +36,5 @@ mkdir artifacts
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -n
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\quickstart.csx
+set TEAMCITY_VERSION="blah"
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx

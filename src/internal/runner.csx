@@ -68,11 +68,6 @@ public static class SimpleTargetsRunner
         var message =
             $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}";
 
-        if (isTeamCity)
-        {
-            message = $"##teamcity[message text='{Encode(message)}' status='NORMAL']";
-        }
-        
-        output.WriteLine(message);
+        output.WriteLine(isTeamCity ? Message(message) : message);
     }
 }
