@@ -9,7 +9,7 @@ public static class SimpleTargets
     public static string[] DependsOn(params string[] dependencies) => dependencies;
 
     public static void Run(IList<string> args, IDictionary<string, SimpleTargets.Target> targets) =>
-        SimpleTargetsRunner.Run(args, targets, Console.Out);
+        SimpleTargetsRunner.Run(args, targets, Console.Out, Console.Error);
 
     public class Target
     {

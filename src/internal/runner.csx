@@ -8,7 +8,7 @@ using static SimpleTargets;
 
 public static class SimpleTargetsRunner
 {
-    public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
+    public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output, TextWriter error)
     {
         var dryRun = false;
 
@@ -57,9 +57,9 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
-        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output);
+        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, error);
 
         output.WriteLine(
-            $"Target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}");
+            $"summary: Requested target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}");
     }
 }
