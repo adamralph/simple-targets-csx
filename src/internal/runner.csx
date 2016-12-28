@@ -47,8 +47,7 @@ public static class SimpleTargetsRunner
                     dryRun = true;
                     break;
                 default:
-                    output.WriteLine($"Unknown option '{option}'.");
-                    return;
+                    throw new Exception($"Unknown option '{option}'.");
             }
         }
 
