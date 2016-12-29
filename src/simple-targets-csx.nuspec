@@ -21,6 +21,7 @@ See the quickstart at https://github.com/adamralph/simple-targets-csx#quickstart
     <file src="internal/runner.csx"         target="internal/runner.csx" />
     <file src="internal/target-runner.csx"  target="internal/target-runner.csx" />
     <file src="internal/targets.csx"        target="internal/targets.csx" />
+    <file src="internal/text-writer.csx"    target="internal/text-writer.csx" />
     <file src="simple-targets.csx"          target="simple-targets.csx" />
   </files>
 </package>
