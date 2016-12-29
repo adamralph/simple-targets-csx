@@ -44,10 +44,9 @@ public static class SimpleTargetsRunner
 
         SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, error);
 
-        var targetSuffix = targetNames.Count > 1 ? "s" : "";
         var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"'{name}'"));
         var dryRunFragment = dryRun ? " (dry run)" : "";
 
-        output.WriteLine($"summary: Requested target{targetSuffix} {targetNamesFragment} succeeded.{dryRunFragment}");
+        output.WriteLine($"simple-targets: {targetNamesFragment} succeeded.{dryRunFragment}");
     }
 }
