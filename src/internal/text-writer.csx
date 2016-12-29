@@ -10,7 +10,7 @@ public class SimpleTargetsTextWriter : TextWriter
     public SimpleTargetsTextWriter(TextWriter writer, string prefix)
     {
         this.writer = writer;
-        this.prefixFragment = prefix + ": ";
+        this.prefixFragment = prefix + "\x1b[37m: \x1b[0m";
     }
 
     public override Encoding Encoding => this.writer.Encoding;
