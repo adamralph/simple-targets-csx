@@ -37,7 +37,7 @@ public static class SimpleTargetsTargetRunner
 
         if (target.Action != null)
         {
-            var targetOutput = TextWriter.Synchronized(new SimpleTargetsTextWriter(output, name));
+            var targetOutput = TextWriter.Synchronized(new SimpleTargetsTextWriter(output, $"simple-targets|'{name}'"));
 
             targetOutput.WriteLine($"Starting...{(dryRun ? " (dry run)" : "")}");
 
@@ -47,7 +47,7 @@ public static class SimpleTargetsTargetRunner
                 var originalError = Console.Error;
 
                 Console.SetOut(targetOutput);
-                Console.SetError(TextWriter.Synchronized(new SimpleTargetsTextWriter(error, name)));
+                Console.SetError(TextWriter.Synchronized(new SimpleTargetsTextWriter(error, $"simple-targets|'{name}'")));
 
                 try
                 {

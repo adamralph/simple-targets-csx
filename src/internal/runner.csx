@@ -42,11 +42,15 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
-        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, error);
-
         var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"'{name}'"));
         var dryRunFragment = dryRun ? " (dry run)" : "";
 
-        output.WriteLine($"simple-targets: {targetNamesFragment} succeeded.{dryRunFragment}");
+        var simpleTargetsOutput = TextWriter.Synchronized(new SimpleTargetsTextWriter(output, $"simple-targets"));
+
+        simpleTargetsOutput.WriteLine($"Running {targetNamesFragment}...{dryRunFragment}");
+
+        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, error);
+
+        simpleTargetsOutput.WriteLine($"{targetNamesFragment} succeeded.{dryRunFragment}");
     }
 }

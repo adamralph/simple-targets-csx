@@ -1,17 +1,16 @@
 using System.IO;
-using System.Text;
 
 public class SimpleTargetsTextWriter : TextWriter
 {
     private readonly TextWriter writer;
-    private readonly string prefix;
+    private readonly string prefixFragment;
 
     private char lastValue = '\n';
 
-    public SimpleTargetsTextWriter(TextWriter writer, string targetName)
+    public SimpleTargetsTextWriter(TextWriter writer, string prefix)
     {
         this.writer = writer;
-        this.prefix = $"'{targetName}': ";
+        this.prefixFragment = prefix + ": ";
     }
 
     public override Encoding Encoding => this.writer.Encoding;
@@ -20,7 +19,7 @@ public class SimpleTargetsTextWriter : TextWriter
     {
         if (IsNewLine(lastValue) && !IsNewLine(value))
         {
-            foreach (var character in this.prefix)
+            foreach (var character in this.prefixFragment)
             {
                 this.writer.Write(character);
             }
