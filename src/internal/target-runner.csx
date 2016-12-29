@@ -25,7 +25,7 @@ public static class SimpleTargetsTargetRunner
         Target target;
         if (!targets.TryGetValue(name, out target))
         {
-            throw new Exception($"Target '{name}' not found.");
+            throw new Exception($@"Target ""{(name.Replace(@"""", @"\"""))}"" not found.");
         }
 
         targetsRan.Add(name);
@@ -37,9 +37,10 @@ public static class SimpleTargetsTargetRunner
 
         if (target.Action != null)
         {
-            var targetOutput = TextWriter.Synchronized(new SimpleTargetsTextWriter(output, name));
+            var prefix = $"\x1b[36msimple-targets\x1b[37m/\x1b[36m{name.Replace(":", "\\:")}\x1b[0m";
+            var targetOutput = TextWriter.Synchronized(new SimpleTargetsTextWriter(output, prefix));
 
-            targetOutput.WriteLine($"Starting...{(dryRun ? " (dry run)" : "")}");
+            targetOutput.WriteLine($"\x1b[37mStarting...\x1b[0m{(dryRun ? "\x1b[33m (dry run)\x1b[0m" : "")}");
 
             if (!dryRun)
             {
@@ -47,7 +48,7 @@ public static class SimpleTargetsTargetRunner
                 var originalError = Console.Error;
 
                 Console.SetOut(targetOutput);
-                Console.SetError(TextWriter.Synchronized(new SimpleTargetsTextWriter(error, name)));
+                Console.SetError(TextWriter.Synchronized(new SimpleTargetsTextWriter(error, prefix)));
 
                 try
                 {
@@ -55,8 +56,8 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    targetOutput.WriteLine($"Failed! {ex.Message}");
-                    throw new Exception($"Target '{name}' failed.", ex);
+                    targetOutput.WriteLine($"\x1b[31mFailed! {ex.Message}\x1b[0m");
+                    throw new Exception($@"Target ""{(name.Replace(@"""", @"\"""))}"" failed.", ex);
                 }
                 finally
                 {
@@ -65,7 +66,7 @@ public static class SimpleTargetsTargetRunner
                 }
             }
 
-            targetOutput.WriteLine($"Succeeded.{(dryRun ? " (dry run)" : "")}");
+            targetOutput.WriteLine($"\x1b[32mSucceeded.\x1b[0m{(dryRun ? "\x1b[33m (dry run)\x1b[0m" : "")}");
         }
     }
 }

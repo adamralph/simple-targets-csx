@@ -4,11 +4,11 @@ using static SimpleTargets;
 
 var targets = new TargetDictionary();
 
-targets.Add("default", DependsOn("world", "exclaim"));
+targets.Add("default", DependsOn("worl:d", "exclaim"));
 
-targets.Add("hello", () => Console.WriteLine("Hello, "));
+targets.Add("hell\"o", () => Console.WriteLine("Hello, "));
 
-targets.Add("world", DependsOn("hello"), () => Console.WriteLine("World"));
+targets.Add("worl:d", DependsOn("hell\"o"), () => Console.WriteLine("World"));
 
 targets.Add("exclaim", () => Console.WriteLine("!"));
 
