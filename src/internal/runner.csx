@@ -1,10 +1,11 @@
 #load "target-runner.csx"
-#load "targets.csx"
+#load "util.csx"
 
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using static SimpleTargets;
+using static SimpleTargetsUtil;
 
 public static class SimpleTargetsRunner
 {
@@ -19,29 +20,13 @@ public static class SimpleTargetsRunner
                 case "-H":
                 case "-h":
                 case "-?":
-                    output.WriteLine("Usage: <script-runner> <script-file> [<options>] [<targets>]");
-                    output.WriteLine();
-                    output.WriteLine("script-runner: A C# script runner. E.g. csi.exe.");
-                    output.WriteLine();
-                    output.WriteLine("script-file: Path to a script.");
-                    output.WriteLine();
-                    output.WriteLine("options:");
-                    output.WriteLine(" -D      Display the targets and dependencies, then exit");
-                    output.WriteLine(" -T      Display the targets, then exit");
-                    output.WriteLine(" -n      Do a dry run without executing actions");
-                    output.WriteLine();
-                    output.WriteLine("targets: A list of targets to run. If not specified, 'default' target will be run.");
-                    output.WriteLine();
-                    output.WriteLine("Examples:");
-                    output.WriteLine("  csi.exe build.csx");
-                    output.WriteLine("  csi.exe build.csx -T");
-                    output.WriteLine("  csi.exe build.csx test package");
+                    output.Write(Usage);
                     return;
                 case "-D":
-                    SimpleTargetsTargets.DisplayWithDependencies(targets, output);
+                    output.Write(GetDependencies(targets));
                     return;
                 case "-T":
-                    SimpleTargetsTargets.Display(targets, output);
+                    output.Write(GetList(targets));
                     return;
                 case "-n":
                     dryRun = true;
@@ -59,7 +44,9 @@ public static class SimpleTargetsRunner
 
         SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, error);
 
-        output.WriteLine(
-            $"summary: Requested target{(targetNames.Count > 1 ? "s" : "")} {string.Join(", ", targetNames.Select(name => $"'{name}'"))} succeeded.{(dryRun ? " (dry run)" : "")}");
+        var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"'{name}'"));
+        var dryRunFragment = dryRun ? " (dry run)" : "";
+
+        output.WriteLine($"simple-targets: {targetNamesFragment} succeeded.{dryRunFragment}");
     }
 }
