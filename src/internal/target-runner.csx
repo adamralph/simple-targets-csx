@@ -22,7 +22,7 @@ public static class SimpleTargetsTargetRunner
         Target target;
         if (!targets.TryGetValue(name, out target))
         {
-            throw new InvalidOperationException($"Target '{name}' not found.");
+            throw new Exception($"Target '{name}' not found.");
         }
 
         targetsRan.Add(name);
