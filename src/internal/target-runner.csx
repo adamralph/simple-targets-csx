@@ -12,7 +12,10 @@ public static class SimpleTargetsTargetRunner
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            RunTarget(name, dryRun, targets, targetsRan, output, error);
+            if (!targetsRan.Contains(name))
+            {
+                RunTarget(name, dryRun, targets, targetsRan, output, error);
+            }
         }
     }
 
