@@ -42,7 +42,7 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
-        var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\\\""))}\""));
+        var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""));
 
         output.WriteLine(Message($"\x1b[37mRunning {targetNamesFragment}...\x1b[0m", dryRun));
 
