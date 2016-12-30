@@ -44,10 +44,10 @@ public static class SimpleTargetsRunner
 
         var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\\\""))}\""));
 
-        output.WriteLine($"{GetPrefix()}\x1b[37mRunning {targetNamesFragment}...\x1b[0m{GetSuffix(dryRun)}");
+        output.WriteLine(Message($"\x1b[37mRunning {targetNamesFragment}...\x1b[0m", dryRun));
 
         SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output);
 
-        output.WriteLine($"{GetPrefix()}\x1b[32m{targetNamesFragment} succeeded.\x1b[0m{GetSuffix(dryRun)}");
+        output.WriteLine(Message($"\x1b[32m{targetNamesFragment} succeeded.\x1b[0m", dryRun));
     }
 }

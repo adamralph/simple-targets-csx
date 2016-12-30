@@ -38,7 +38,7 @@ public static class SimpleTargetsTargetRunner
 
         if (target.Action != null)
         {
-            output.WriteLine($"{GetPrefix(name)}\x1b[37mStarting...\x1b[0m{GetSuffix(dryRun)}");
+            output.WriteLine(Message("\x1b[37mStarting...\x1b[0m", dryRun, name));
 
             if (!dryRun)
             {
@@ -48,12 +48,12 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine($"{GetPrefix(name)}\x1b[31mFailed! {ex.Message}\x1b[0m{GetSuffix(dryRun)}");
+                    output.WriteLine(Message($"\x1b[31mFailed! {ex.Message}\x1b[0m", dryRun, name));
                     throw new Exception($@"Target ""{(name.Replace(@"""", @"\"""))}"" failed.", ex);
                 }
             }
 
-            output.WriteLine($"{GetPrefix(name)}\x1b[32mSucceeded.\x1b[0m{GetSuffix(dryRun)}");
+            output.WriteLine(Message("\x1b[32mSucceeded.\x1b[0m", dryRun, name));
         }
     }
 }
