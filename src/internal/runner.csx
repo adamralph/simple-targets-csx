@@ -42,14 +42,12 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
-        var prefix = $"\x1b[36msimple-targets\x1b[37m: ";
         var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\\\""))}\""));
-        var dryRunFragment = dryRun ? "\x1b[33m (dry run)\x1b[0m" : "";
 
-        output.WriteLine($"{prefix}\x1b[37mRunning {targetNamesFragment}...\x1b[0m{dryRunFragment}");
+        output.WriteLine(Message($"\x1b[37mRunning {targetNamesFragment}...\x1b[0m", dryRun));
 
         SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output);
 
-        output.WriteLine($"{prefix}\x1b[32m{targetNamesFragment} succeeded.\x1b[0m{dryRunFragment}");
+        output.WriteLine(Message($"\x1b[32m{targetNamesFragment} succeeded.\x1b[0m", dryRun));
     }
 }
