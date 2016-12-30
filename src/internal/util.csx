@@ -6,18 +6,18 @@ using static SimpleTargets;
 public static class SimpleTargetsUtil
 {
     private const string Default        = "\x1b[0m";
-    private const string Red            = "\x1b[31m";
     private const string Green          = "\x1b[32m";
-    private const string Yellow         = "\x1b[33m";
     private const string Cyan           = "\x1b[36m";
     private const string White          = "\x1b[37m";
+    private const string BrightRed      = "\x1b[91m";
     private const string BrightYellow   = "\x1b[93m";
+    private const string BrightMagenta  = "\x1b[95m";
 
     private static readonly Dictionary<MessageType, string> Colors = new Dictionary<MessageType, string>
     {
         { MessageType.Start,    White },
         { MessageType.Success,  Green },
-        { MessageType.Failure,  Red },
+        { MessageType.Failure,  BrightRed },
     };
 
     public static string Usage =>
@@ -77,8 +77,8 @@ $@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<op
     public static string Message(MessageType messageType, string text, bool dryRun) =>
         $"{GetPrefix()}{Colors[messageType]}{text}{GetSuffix(dryRun)}{Default}";
 
-    public static string Message(MessageType messageType, string text, bool dryRun, string targetName) =>
-        $"{GetPrefix(targetName)}{Colors[messageType]}{text}{GetSuffix(dryRun)}{Default}";
+    public static string Message(MessageType messageType, string text, string targetName) =>
+        $"{GetPrefix(targetName)}{Colors[messageType]}{text}{Default}";
 
     private static string GetPrefix() =>
         $"{Cyan}simple-targets{White}: ";
@@ -86,5 +86,5 @@ $@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<op
     private static string GetPrefix(string targetName) =>
         $"{Cyan}simple-targets{White}/{Cyan}{targetName.Replace(": ", ":: ")}{White}: ";
 
-    private static string GetSuffix(bool dryRun) => dryRun ? $"{Yellow} (dry run)" : "";
+    private static string GetSuffix(bool dryRun) => dryRun ? $"{BrightMagenta} (dry run)" : "";
 }
