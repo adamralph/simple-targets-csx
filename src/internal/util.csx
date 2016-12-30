@@ -5,12 +5,13 @@ using static SimpleTargets;
 
 public static class SimpleTargetsUtil
 {
-    private const string Default    = "\x1b[0m";
-    private const string Red        = "\x1b[31m";
-    private const string Green      = "\x1b[32m";
-    private const string Yellow     = "\x1b[33m";
-    private const string Cyan       = "\x1b[36m";
-    private const string White      = "\x1b[37m";
+    private const string Default        = "\x1b[0m";
+    private const string Red            = "\x1b[31m";
+    private const string Green          = "\x1b[32m";
+    private const string Yellow         = "\x1b[33m";
+    private const string Cyan           = "\x1b[36m";
+    private const string White          = "\x1b[37m";
+    private const string BrightYellow   = "\x1b[93m";
 
     private static readonly Dictionary<MessageType, string> Colors = new Dictionary<MessageType, string>
     {
@@ -20,23 +21,24 @@ public static class SimpleTargetsUtil
     };
 
     public static string Usage =>
-@"Usage: <script-runner> <script-file> [<options>] [<targets>]
+$@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<options>] {Default}[<targets>]
 
-script-runner: A C# script runner. E.g. csi.exe.
+{Cyan}script-runner: {Default}A C# script runner. E.g. {BrightYellow}csi.exe{Default}.
 
-script-file: Path to a script.
+{Cyan}script-file: {Default}Path to a script. E.g. build.csx.
 
-options:
- -D      Display the targets and dependencies, then exit
- -T      Display the targets, then exit
- -n      Do a dry run without executing actions
+{Cyan}options:{Default}
+ {White}-D      {Default}Display the targets and dependencies, then exit
+ {White}-T      {Default}Display the targets, then exit
+ {White}-n      {Default}Do a dry run without executing actions
 
-targets: A list of targets to run. If not specified, 'default' target will be run.
+{Cyan}targets: {Default}A list of targets to run. If not specified, 'default' target will be run.
 
-Examples:
-  csi.exe build.csx
-  csi.exe build.csx -T
-  csi.exe build.csx test package
+{Cyan}Examples:{Default}
+  {BrightYellow}csi.exe {Default}build.csx
+  {BrightYellow}csi.exe {Default}build.csx {White}-T{Default}
+  {BrightYellow}csi.exe {Default}build.csx test pack
+  {BrightYellow}csi.exe {Default}build.csx {White}-n {Default}build
 ";
 
     public static string GetList(IDictionary<string, Target> targets)
@@ -58,7 +60,7 @@ Examples:
             value.AppendLine(target.Key);
             foreach (var dependency in target.Value.Dependencies)
             {
-                value.AppendLine("  " + dependency);
+                value.AppendLine($"  {White}{dependency}{Default}");
             }
         }
 
