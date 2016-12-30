@@ -9,7 +9,7 @@ using static SimpleTargetsUtil;
 
 public static class SimpleTargetsRunner
 {
-    public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output, TextWriter error)
+    public static void Run(IList<string> args, IDictionary<string, Target> targets, TextWriter output)
     {
         var dryRun = false;
 
@@ -42,15 +42,14 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
+        var prefix = $"\x1b[36msimple-targets\x1b[37m: ";
         var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\\\""))}\""));
         var dryRunFragment = dryRun ? "\x1b[33m (dry run)\x1b[0m" : "";
 
-        var simpleTargetsOutput = TextWriter.Synchronized(new SimpleTargetsTextWriter(output, $"\x1b[36msimple-targets\x1b[0m"));
+        output.WriteLine($"{prefix}\x1b[37mRunning {targetNamesFragment}...\x1b[0m{dryRunFragment}");
 
-        simpleTargetsOutput.WriteLine($"\x1b[37mRunning {targetNamesFragment}...\x1b[0m{dryRunFragment}");
+        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output);
 
-        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, error);
-
-        simpleTargetsOutput.WriteLine($"\x1b[32m{targetNamesFragment} succeeded.\x1b[0m{dryRunFragment}");
+        output.WriteLine($"{prefix}\x1b[32m{targetNamesFragment} succeeded.\x1b[0m{dryRunFragment}");
     }
 }
