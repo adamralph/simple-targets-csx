@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>simple-targets-csx</id>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
     <authors>Adam Ralph, simple-targets-csx contributors</authors>
     <licenseUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csx/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/adamralph/simple-targets-csx</projectUrl>
