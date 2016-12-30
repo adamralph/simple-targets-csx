@@ -26,7 +26,7 @@ public static class SimpleTargetsTargetRunner
         Target target;
         if (!targets.TryGetValue(name, out target))
         {
-            throw new Exception($@"Target ""{(name.Replace(@"""", @"\"""))}"" not found.");
+            throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" not found.");
         }
 
         targetsRan.Add(name);
@@ -49,7 +49,7 @@ public static class SimpleTargetsTargetRunner
                 catch (Exception ex)
                 {
                     output.WriteLine(Message($"\x1b[31mFailed! {ex.Message}\x1b[0m", dryRun, name));
-                    throw new Exception($@"Target ""{(name.Replace(@"""", @"\"""))}"" failed.", ex);
+                    throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" failed.", ex);
                 }
             }
 
