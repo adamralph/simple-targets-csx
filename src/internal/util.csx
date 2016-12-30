@@ -5,40 +5,41 @@ using static SimpleTargets;
 
 public static class SimpleTargetsUtil
 {
-    private const string Default        = "\x1b[0m";
-    private const string Green          = "\x1b[32m";
-    private const string Cyan           = "\x1b[36m";
-    private const string White          = "\x1b[37m";
-    private const string BrightRed      = "\x1b[91m";
-    private const string BrightYellow   = "\x1b[93m";
-    private const string BrightMagenta  = "\x1b[95m";
+    private static string Default          (bool color) => color ? "\x1b[0m"   : "";
+    private static string Green            (bool color) => color ? "\x1b[32m"  : "";
+    private static string Cyan             (bool color) => color ? "\x1b[36m"  : "";
+    private static string White            (bool color) => color ? "\x1b[37m"  : "";
+    private static string BrightRed        (bool color) => color ? "\x1b[91m"  : "";
+    private static string BrightYellow     (bool color) => color ? "\x1b[93m"  : "";
+    private static string BrightMagenta    (bool color) => color ? "\x1b[95m"  : "";
 
-    private static readonly Dictionary<MessageType, string> Colors = new Dictionary<MessageType, string>
+    private static readonly Dictionary<MessageType, Func<bool,string>> Colors = new Dictionary<MessageType, Func<bool,string>>
     {
-        { MessageType.Start,    White },
-        { MessageType.Success,  Green },
-        { MessageType.Failure,  BrightRed },
+        { MessageType.Start,    color => White(color) },
+        { MessageType.Success,  color => Green(color) },
+        { MessageType.Failure,  color => BrightRed(color) },
     };
 
-    public static string Usage =>
-$@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<options>] {Default}[<targets>]
+    public static string GetUsage(bool color) =>
+$@"{Cyan(color)}Usage: {BrightYellow(color)}<script-runner> {Default(color)}<script-file> {White(color)}[<options>] {Default(color)}[<targets>]
 
-{Cyan}script-runner: {Default}A C# script runner. E.g. {BrightYellow}csi.exe{Default}.
+{Cyan(color)}script-runner: {Default(color)}A C# script runner. E.g. {BrightYellow(color)}csi.exe{Default(color)}.
 
-{Cyan}script-file: {Default}Path to a script. E.g. build.csx.
+{Cyan(color)}script-file: {Default(color)}Path to a script. E.g. build.csx.
 
-{Cyan}options:{Default}
- {White}-D      {Default}Display the targets and dependencies, then exit
- {White}-T      {Default}Display the targets, then exit
- {White}-n      {Default}Do a dry run without executing actions
+{Cyan(color)}options:{Default(color)}
+ {White(color)}-D          {Default(color)}Display the targets and dependencies, then exit
+ {White(color)}-T          {Default(color)}Display the targets, then exit
+ {White(color)}-n          {Default(color)}Do a dry run without executing actions
+ {White(color)}--no-color  {Default(color)}Disable colored output
 
-{Cyan}targets: {Default}A list of targets to run. If not specified, 'default' target will be run.
+{Cyan(color)}targets: {Default(color)}A list of targets to run. If not specified, 'Default(color)' target will be run.
 
-{Cyan}Examples:{Default}
-  {BrightYellow}csi.exe {Default}build.csx
-  {BrightYellow}csi.exe {Default}build.csx {White}-T{Default}
-  {BrightYellow}csi.exe {Default}build.csx test pack
-  {BrightYellow}csi.exe {Default}build.csx {White}-n {Default}build
+{Cyan(color)}Examples:{Default(color)}
+  {BrightYellow(color)}csi.exe {Default(color)}build.csx
+  {BrightYellow(color)}csi.exe {Default(color)}build.csx {White(color)}-T{Default(color)}
+  {BrightYellow(color)}csi.exe {Default(color)}build.csx test pack
+  {BrightYellow(color)}csi.exe {Default(color)}build.csx {White(color)}-n {Default(color)}build
 ";
 
     public static string GetList(IDictionary<string, Target> targets)
@@ -52,7 +53,7 @@ $@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<op
         return value.ToString();
     }
 
-    public static string GetDependencies(IDictionary<string, Target> targets)
+    public static string GetDependencies(IDictionary<string, Target> targets, bool color)
     {
         var value = new StringBuilder();
         foreach (var target in targets.OrderBy(pair => pair.Key))
@@ -60,7 +61,7 @@ $@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<op
             value.AppendLine(target.Key);
             foreach (var dependency in target.Value.Dependencies)
             {
-                value.AppendLine($"  {White}{dependency}{Default}");
+                value.AppendLine($"  {White(color)}{dependency}{Default(color)}");
             }
         }
 
@@ -74,17 +75,17 @@ $@"{Cyan}Usage: {BrightYellow}<script-runner> {Default}<script-file> {White}[<op
         Failure,
     }
 
-    public static string Message(MessageType messageType, string text, bool dryRun) =>
-        $"{GetPrefix()}{Colors[messageType]}{text}{GetSuffix(dryRun)}{Default}";
+    public static string Message(MessageType messageType, string text, bool dryRun, bool color) =>
+        $"{GetPrefix(color)}{Colors[messageType](color)}{text}{GetSuffix(dryRun, color)}{Default(color)}";
 
-    public static string Message(MessageType messageType, string text, string targetName) =>
-        $"{GetPrefix(targetName)}{Colors[messageType]}{text}{Default}";
+    public static string Message(MessageType messageType, string text, string targetName, bool color) =>
+        $"{GetPrefix(targetName, color)}{Colors[messageType](color)}{text}{Default(color)}";
 
-    private static string GetPrefix() =>
-        $"{Cyan}simple-targets{White}: ";
+    private static string GetPrefix(bool color) =>
+        $"{Cyan(color)}simple-targets{White(color)}: ";
 
-    private static string GetPrefix(string targetName) =>
-        $"{Cyan}simple-targets{White}/{Cyan}{targetName.Replace(": ", ":: ")}{White}: ";
+    private static string GetPrefix(string targetName, bool color) =>
+        $"{Cyan(color)}simple-targets{White(color)}/{Cyan(color)}{targetName.Replace(": ", ":: ")}{White(color)}: ";
 
-    private static string GetSuffix(bool dryRun) => dryRun ? $"{BrightMagenta} (dry run)" : "";
+    private static string GetSuffix(bool dryRun, bool color) => dryRun ? $"{BrightMagenta(color)} (dry run)" : "";
 }
