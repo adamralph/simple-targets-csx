@@ -50,4 +50,12 @@ Examples:
 
         return value.ToString();
     }
+
+    public static string GetPrefix() =>
+        $"\x1b[36msimple-targets\x1b[37m: \x1b[0m";
+
+    public static string GetPrefix(string targetName) =>
+        $"\x1b[36msimple-targets\x1b[37m/\x1b[36m{targetName.Replace(":", "\\:")}\x1b[37m: \x1b[0m";
+
+    public static string GetSuffix(bool dryRun) => dryRun ? "\x1b[33m (dry run)\x1b[0m" : "";
 }

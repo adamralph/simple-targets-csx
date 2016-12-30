@@ -1,7 +1,10 @@
+#load "util.csx"
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using static SimpleTargets;
+using static SimpleTargetsUtil;
 
 public static class SimpleTargetsTargetRunner
 {
@@ -35,9 +38,7 @@ public static class SimpleTargetsTargetRunner
 
         if (target.Action != null)
         {
-            var prefix = $"\x1b[36msimple-targets\x1b[37m/\x1b[36m{name.Replace(":", "\\:")}\x1b[37m: ";
-
-            output.WriteLine($"{prefix}\x1b[37mStarting...\x1b[0m{(dryRun ? "\x1b[33m (dry run)\x1b[0m" : "")}");
+            output.WriteLine($"{GetPrefix(name)}\x1b[37mStarting...\x1b[0m{GetSuffix(dryRun)}");
 
             if (!dryRun)
             {
@@ -47,12 +48,12 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine($"{prefix}\x1b[31mFailed! {ex.Message}\x1b[0m");
+                    output.WriteLine($"{GetPrefix(name)}\x1b[31mFailed! {ex.Message}\x1b[0m{GetSuffix(dryRun)}");
                     throw new Exception($@"Target ""{(name.Replace(@"""", @"\"""))}"" failed.", ex);
                 }
             }
 
-            output.WriteLine($"{prefix}\x1b[32mSucceeded.\x1b[0m{(dryRun ? "\x1b[33m (dry run)\x1b[0m" : "")}");
+            output.WriteLine($"{GetPrefix(name)}\x1b[32mSucceeded.\x1b[0m{GetSuffix(dryRun)}");
         }
     }
 }
