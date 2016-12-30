@@ -5,6 +5,20 @@ using static SimpleTargets;
 
 public static class SimpleTargetsUtil
 {
+    private const string Default    = "\x1b[0m";
+    private const string Red        = "\x1b[31m";
+    private const string Green      = "\x1b[32m";
+    private const string Yellow     = "\x1b[33m";
+    private const string Cyan       = "\x1b[36m";
+    private const string White      = "\x1b[37m";
+
+    private static readonly Dictionary<MessageType, string> Colors = new Dictionary<MessageType, string>
+    {
+        { MessageType.Start,    White },
+        { MessageType.Success,  Green },
+        { MessageType.Failure,  Red },
+    };
+
     public static string Usage =>
 @"Usage: <script-runner> <script-file> [<options>] [<targets>]
 
@@ -51,17 +65,24 @@ Examples:
         return value.ToString();
     }
 
-    public static string Message(string text, bool dryRun) =>
-        $"{GetPrefix()}{text}{GetSuffix(dryRun)}";
+    public enum MessageType
+    {
+        Start,
+        Success,
+        Failure,
+    }
 
-    public static string Message(string text, bool dryRun, string targetName) =>
-        $"{GetPrefix(targetName)}{text}{GetSuffix(dryRun)}";
+    public static string Message(MessageType messageType, string text, bool dryRun) =>
+        $"{GetPrefix()}{Colors[messageType]}{text}{GetSuffix(dryRun)}{Default}";
+
+    public static string Message(MessageType messageType, string text, bool dryRun, string targetName) =>
+        $"{GetPrefix(targetName)}{Colors[messageType]}{text}{GetSuffix(dryRun)}{Default}";
 
     private static string GetPrefix() =>
-        $"\x1b[36msimple-targets\x1b[37m: \x1b[0m";
+        $"{Cyan}simple-targets{White}: ";
 
     private static string GetPrefix(string targetName) =>
-        $"\x1b[36msimple-targets\x1b[37m/\x1b[36m{targetName.Replace(": ", ":: ")}\x1b[37m: \x1b[0m";
+        $"{Cyan}simple-targets{White}/{Cyan}{targetName.Replace(": ", ":: ")}{White}: ";
 
-    private static string GetSuffix(bool dryRun) => dryRun ? "\x1b[33m (dry run)\x1b[0m" : "";
+    private static string GetSuffix(bool dryRun) => dryRun ? $"{Yellow} (dry run)" : "";
 }
