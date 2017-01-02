@@ -2,7 +2,7 @@
 
 # simple-targets-csx
 
-[![NuGet version](https://img.shields.io/nuget/v/simple-targets-csx.svg?style=flat)](https://www.nuget.org/packages/simple-targets-csx) [![Build status](https://ci.appveyor.com/api/projects/status/cmkx89k0sj0h3ebw/branch/master?svg=true)](https://ci.appveyor.com/project/adamralph/simple-targets-csx/branch/master)
+[![NuGet version](https://img.shields.io/nuget/v/simple-targets-csx.svg?style=flat)](https://www.nuget.org/packages/simple-targets-csx) [![Build status](https://ci.appveyor.com/api/projects/status/cmkx89k0sj0h3ebw/branch/master?svg=true)](https://ci.appveyor.com/project/adamralph/simple-targets-csharp/branch/master)
 
 A minimalist C# script library for writing targets for building, analysing, testing, packaging, deploying, etc. and running them using any runner which supports the "standard" C# script dialect (as defined by [csi.exe](https://msdn.microsoft.com/en-us/magazine/mt614271.aspx)).
 
