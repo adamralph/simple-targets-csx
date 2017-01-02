@@ -21,7 +21,7 @@ public static class SimpleTargetsUtil
     };
 
     public static string GetUsage(bool color) =>
-$@"{Cyan(color)}Usage: {BrightYellow(color)}<script-runner> {Default(color)}<script-file> {White(color)}[<options>] {Default(color)}[<targets>]
+$@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Default(color)}<script-file> {White(color)}[<options>] {Default(color)}[<targets>]
 
 {Cyan(color)}script-runner: {Default(color)}A C# script runner. E.g. {BrightYellow(color)}csi.exe{Default(color)}.
 
@@ -76,16 +76,16 @@ $@"{Cyan(color)}Usage: {BrightYellow(color)}<script-runner> {Default(color)}<scr
     }
 
     public static string Message(MessageType messageType, string text, bool dryRun, bool color) =>
-        $"{GetPrefix(color)}{Colors[messageType](color)}{text}{GetSuffix(dryRun, color)}{Default(color)}";
+        $"{GetPrefix(color)}{Colors[messageType](color)}{text}{Default(color)}{GetSuffix(dryRun, color)}";
 
     public static string Message(MessageType messageType, string text, string targetName, bool color) =>
         $"{GetPrefix(targetName, color)}{Colors[messageType](color)}{text}{Default(color)}";
 
     private static string GetPrefix(bool color) =>
-        $"{Cyan(color)}simple-targets{White(color)}: ";
+        $"{Cyan(color)}simple-targets{Default(color)}{White(color)}: {Default(color)}";
 
     private static string GetPrefix(string targetName, bool color) =>
-        $"{Cyan(color)}simple-targets{White(color)}/{Cyan(color)}{targetName.Replace(": ", ":: ")}{White(color)}: ";
+        $"{Cyan(color)}simple-targets{Default(color)}{White(color)}/{Default(color)}{Cyan(color)}{targetName.Replace(": ", ":: ")}{Default(color)}{White(color)}: {Default(color)}";
 
-    private static string GetSuffix(bool dryRun, bool color) => dryRun ? $"{BrightMagenta(color)} (dry run)" : "";
+    private static string GetSuffix(bool dryRun, bool color) => dryRun ? $"{BrightMagenta(color)} (dry run){Default(color)}" : "";
 }
