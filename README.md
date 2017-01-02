@@ -13,7 +13,7 @@ In no way restricted to writing targets related to .NET projects.
 * Install (or download and unzip) the [NuGet package](https://www.nuget.org/packages/simple-targets-csx).
 * Create a C# script named `build.csx` and add the following code:
 ```C#
-#load "packages/simple-targets-csx.5.0.0/simple-targets.csx" // change the path as required
+#load "packages/simple-targets-csx.5.1.0/simple-targets.csx" // change the path as required
 
 using static SimpleTargets;
 
