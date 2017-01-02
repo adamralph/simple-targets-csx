@@ -68,17 +68,32 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
         return value.ToString();
     }
 
-    public enum MessageType
+    private enum MessageType
     {
         Start,
         Success,
         Failure,
     }
 
-    public static string Message(MessageType messageType, string text, bool dryRun, bool color) =>
+    public static string StartMessage(string text, bool dryRun, bool color) =>
+        Message(MessageType.Start, text, dryRun, color);
+
+    public static string SuccessMessage(string text, bool dryRun, bool color) =>
+        Message(MessageType.Success, text, dryRun, color);
+
+    public static string StartMessage(string text, string targetName, bool color) =>
+        Message(MessageType.Start, text, targetName, color);
+
+    public static string FailureMessage(string text, string targetName, bool color) =>
+        Message(MessageType.Failure, text, targetName, color);
+
+    public static string SuccessMessage(string text, string targetName, bool color) =>
+        Message(MessageType.Success, text, targetName, color);
+
+    private static string Message(MessageType messageType, string text, bool dryRun, bool color) =>
         $"{GetPrefix(color)}{Colors[messageType](color)}{text}{Default(color)}{GetSuffix(dryRun, color)}";
 
-    public static string Message(MessageType messageType, string text, string targetName, bool color) =>
+    private static string Message(MessageType messageType, string text, string targetName, bool color) =>
         $"{GetPrefix(targetName, color)}{Colors[messageType](color)}{text}{Default(color)}";
 
     private static string GetPrefix(bool color) =>

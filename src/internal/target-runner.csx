@@ -38,7 +38,7 @@ public static class SimpleTargetsTargetRunner
 
         if (target.Action != null)
         {
-            output.WriteLine(Message(MessageType.Start, $"Starting...", name, color));
+            output.WriteLine(StartMessage($"Starting...", name, color));
 
             if (!dryRun)
             {
@@ -48,12 +48,12 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine(Message(MessageType.Failure, $"Failed! {ex.Message}", name, color));
+                    output.WriteLine(FailureMessage($"Failed! {ex.Message}", name, color));
                     throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" failed.", ex);
                 }
             }
 
-            output.WriteLine(Message(MessageType.Success, $"Succeeded.", name, color));
+            output.WriteLine(SuccessMessage($"Succeeded.", name, color));
         }
     }
 }

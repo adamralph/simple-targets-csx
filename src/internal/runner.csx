@@ -69,10 +69,10 @@ public static class SimpleTargetsRunner
 
         var targetNamesFragment = string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""));
 
-        output.WriteLine(Message(MessageType.Start, $"Running {targetNamesFragment}...", dryRun, color));
+        output.WriteLine(StartMessage($"Running {targetNamesFragment}...", dryRun, color));
 
         SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color);
 
-        output.WriteLine(Message(MessageType.Success, $"{targetNamesFragment} succeeded.", dryRun, color));
+        output.WriteLine(SuccessMessage($"{targetNamesFragment} succeeded.", dryRun, color));
     }
 }
