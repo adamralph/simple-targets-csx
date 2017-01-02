@@ -75,20 +75,28 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
         Failure,
     }
 
-    public static string StartMessage(string text, bool dryRun, bool color) =>
-        Message(MessageType.Start, text, dryRun, color);
+    public static string StartMessage(IList<string> targetNames, bool dryRun, bool color) =>
+        Message(
+            MessageType.Start,
+            $"Running {string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))}...",
+            dryRun,
+            color);
 
-    public static string SuccessMessage(string text, bool dryRun, bool color) =>
-        Message(MessageType.Success, text, dryRun, color);
+    public static string SuccessMessage(IList<string> targetNames, bool dryRun, bool color) =>
+        Message(
+            MessageType.Success,
+            $"{string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))} succeeded.",
+            dryRun,
+            color);
 
-    public static string StartMessage(string text, string targetName, bool color) =>
-        Message(MessageType.Start, text, targetName, color);
+    public static string StartMessage(string targetName, bool color) =>
+        Message(MessageType.Start, "Starting...", targetName, color);
 
-    public static string FailureMessage(string text, string targetName, bool color) =>
-        Message(MessageType.Failure, text, targetName, color);
+    public static string FailureMessage(string targetName, Exception ex, bool color) =>
+        Message(MessageType.Failure, $"Failed! {ex.Message}", targetName, color);
 
-    public static string SuccessMessage(string text, string targetName, bool color) =>
-        Message(MessageType.Success, text, targetName, color);
+    public static string SuccessMessage(string targetName, bool color) =>
+        Message(MessageType.Success, "Succeeded.", targetName, color);
 
     private static string Message(MessageType messageType, string text, bool dryRun, bool color) =>
         $"{GetPrefix(color)}{Colors[messageType](color)}{text}{Default(color)}{GetSuffix(dryRun, color)}";
