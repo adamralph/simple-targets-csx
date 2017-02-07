@@ -30,10 +30,14 @@ mkdir artifacts
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "If (Test-Path .\artifacts\files\) { Remove-Item .\artifacts\files\ -Recurse -Force }"
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "Get-ChildItem .\artifacts\ -Filter *.nupkg | Select-Object -First 1 | foreach { Copy-Item $_.FullName .\artifacts\files.zip -Force }"
 @powershell -NoProfile -ExecutionPolicy unrestricted -Command "Expand-Archive .\artifacts\files.zip -DestinationPath .\artifacts\files"
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -?
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -T
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -D
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -n
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx "hell""o"
-"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\quickstart.csx
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -? || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -T || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -D || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -n || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx "hell""o" || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\quickstart.csx || goto :error
+
+goto :EOF
+:error
+exit /b %errorlevel%
