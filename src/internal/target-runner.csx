@@ -1,4 +1,5 @@
 #load "util.csx"
+#load "../simple-targets-target.csx"
 
 using System;
 using System.Collections.Generic;

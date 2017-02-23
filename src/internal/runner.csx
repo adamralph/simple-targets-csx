@@ -1,5 +1,6 @@
 #load "target-runner.csx"
 #load "util.csx"
+#load "../simple-targets-target.csx"
 
 using System.Collections.Generic;
 using System.IO;
