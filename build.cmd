@@ -33,6 +33,7 @@ mkdir artifacts
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\artifacts\files\internal\runner.csx || goto :error
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\artifacts\files\internal\target-runner.csx || goto :error
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\artifacts\files\internal\util.csx || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\artifacts\files\simple-targets-target.csx || goto :error
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\artifacts\files\simple-targets.csx || goto :error
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -? || goto :error
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\test.csx -T || goto :error
