@@ -84,6 +84,13 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
             dryRun,
             color);
 
+    public static string FailureMessage(IList<string> targetNames, bool dryRun, bool color) =>
+        Message(
+            MessageType.Failure,
+            $"{string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))} failed!",
+            dryRun,
+            color);
+
     public static string SuccessMessage(IList<string> targetNames, bool dryRun, bool color) =>
         Message(
             MessageType.Success,
