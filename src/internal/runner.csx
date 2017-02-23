@@ -70,7 +70,15 @@ public static class SimpleTargetsRunner
 
         output.WriteLine(StartMessage(targetNames, dryRun, color));
 
-        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color);
+        try
+        {
+            SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color);
+        }
+        catch (Exception)
+        {
+            output.WriteLine(FailureMessage(targetNames, dryRun, color));
+            throw;
+        }
 
         output.WriteLine(SuccessMessage(targetNames, dryRun, color));
     }
