@@ -14,10 +14,7 @@ public static class SimpleTargetsTargetRunner
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            if (!targetsRan.Contains(name))
-            {
-                RunTarget(name, dryRun, targets, targetsRan, output, color);
-            }
+            RunTarget(name, dryRun, targets, targetsRan, output, color);
         }
     }
 
@@ -30,9 +27,12 @@ public static class SimpleTargetsTargetRunner
             throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" not found.");
         }
 
-        targetsRan.Add(name);
+        if (!targetsRan.Add(name))
+        {
+            return;
+        }
 
-        foreach (var dependency in target.Dependencies.Except(targetsRan))
+        foreach (var dependency in target.Dependencies)
         {
             RunTarget(dependency, dryRun, targets, targetsRan, output, color);
         }
