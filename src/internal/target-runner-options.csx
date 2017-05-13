@@ -14,6 +14,7 @@ public class SimpleTargetsTargetRunnerOptions
         this.Output = output;
         this.DryRun = false;
         this.Color = true;
+        this.RunDependencies = true;
     }
 
     public IDictionary<string, Target> Targets { get; }
@@ -23,4 +24,6 @@ public class SimpleTargetsTargetRunnerOptions
     public bool DryRun { get; set; }
 
     public bool Color { get; set; }
+
+    public bool RunDependencies { get; set; }
 }

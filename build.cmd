@@ -48,6 +48,8 @@ mkdir artifacts
 
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\double-dependency.csx || goto :error
 
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\dependency-error.csx -s || goto :error
+
 :: exit
 goto :EOF
 :error

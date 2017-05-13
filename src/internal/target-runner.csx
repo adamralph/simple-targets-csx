@@ -33,9 +33,12 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        foreach (var dependency in target.Dependencies)
+        if ( options.RunDependencies )
         {
-            RunTarget(dependency, targetsRan, options);
+            foreach (var dependency in target.Dependencies)
+            {
+                RunTarget(dependency, targetsRan, options);
+            }
         }
 
         if (target.Action != null)
