@@ -1,3 +1,4 @@
+#load "target-runner-options.csx"
 #load "target-runner.csx"
 #load "util.csx"
 #load "../simple-targets-target.csx"
@@ -15,8 +16,8 @@ public static class SimpleTargetsRunner
         var showUsage = false;
         var showDependencies = false;
         var showList = false;
-        var dryRun = false;
-        var color = true;
+
+        var options = new SimpleTargetsTargetRunnerOptions(targets, output);
 
         foreach (var option in args.Where(arg => arg.StartsWith("-", StringComparison.Ordinal)))
         {
@@ -34,10 +35,10 @@ public static class SimpleTargetsRunner
                     showList = true;
                     break;
                 case "-n":
-                    dryRun = true;
+                    options.DryRun = true;
                     break;
                 case "--no-color":
-                    color = false;
+                    options.Color = false;
                     break;
                 default:
                     throw new Exception($"Unknown option '{option}'.");
@@ -46,13 +47,13 @@ public static class SimpleTargetsRunner
 
         if (showUsage)
         {
-            output.Write(GetUsage(color));
+            output.Write(GetUsage(options.Color));
             return;
         }
 
         if (showDependencies)
         {
-            output.Write(GetDependencies(targets, color));
+            output.Write(GetDependencies(targets, options.Color));
             return;
         }
 
@@ -68,10 +69,10 @@ public static class SimpleTargetsRunner
             targetNames.Add("default");
         }
 
-        output.WriteLine(StartMessage(targetNames, dryRun, color));
+        output.WriteLine(StartMessage(targetNames, options.DryRun, options.Color));
 
-        SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color);
+        SimpleTargetsTargetRunner.Run(targetNames, options);
 
-        output.WriteLine(SuccessMessage(targetNames, dryRun, color));
+        output.WriteLine(SuccessMessage(targetNames, options.DryRun, options.Color));
     }
 }

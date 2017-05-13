@@ -1,3 +1,4 @@
+#load "target-runner-options.csx"
 #load "util.csx"
 #load "../simple-targets-target.csx"
 
@@ -9,20 +10,20 @@ using static SimpleTargetsUtil;
 
 public static class SimpleTargetsTargetRunner
 {
-    public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output, bool color)
+    public static void Run(IList<string> targetNames, SimpleTargetsTargetRunnerOptions options)
     {
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            RunTarget(name, dryRun, targets, targetsRan, output, color);
+            RunTarget(name, targetsRan, options);
         }
     }
 
     private static void RunTarget(
-        string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, bool color)
+        string name, ISet<string> targetsRan, SimpleTargetsTargetRunnerOptions options)
     {
         Target target;
-        if (!targets.TryGetValue(name, out target))
+        if (!options.Targets.TryGetValue(name, out target))
         {
             throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" not found.");
         }
@@ -34,14 +35,14 @@ public static class SimpleTargetsTargetRunner
 
         foreach (var dependency in target.Dependencies)
         {
-            RunTarget(dependency, dryRun, targets, targetsRan, output, color);
+            RunTarget(dependency, targetsRan, options);
         }
 
         if (target.Action != null)
         {
-            output.WriteLine(StartMessage(name, color));
+            options.Output.WriteLine(StartMessage(name, options.Color));
 
-            if (!dryRun)
+            if (!options.DryRun)
             {
                 try
                 {
@@ -49,12 +50,12 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine(FailureMessage(name, ex, color));
+                    options.Output.WriteLine(FailureMessage(name, ex, options.Color));
                     throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" failed.", ex);
                 }
             }
 
-            output.WriteLine(SuccessMessage(name, color));
+            options.Output.WriteLine(SuccessMessage(name, options.Color));
         }
     }
 }
