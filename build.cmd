@@ -48,6 +48,8 @@ mkdir artifacts
 
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\double-dependency.csx || goto :error
 
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\check-targets-up-front.csx --no-color build notarealtarget || goto :error
+
 :: exit
 goto :EOF
 :error
