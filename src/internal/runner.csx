@@ -70,8 +70,27 @@ public static class SimpleTargetsRunner
 
         output.WriteLine(StartMessage(targetNames, dryRun, color));
 
+        EnsureAllTargetsExist(targetNames, targets);
+        EnsureAllDependenciesExist(targets);
+
         SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color);
 
         output.WriteLine(SuccessMessage(targetNames, dryRun, color));
+    }
+
+    private static void EnsureAllDependenciesExist(IDictionary<string, Target> targets)
+    {
+        EnsureAllTargetsExist(targets.Values.SelectMany(t => t.Dependencies), targets);
+    }
+
+    private static void EnsureAllTargetsExist(IEnumerable<string> targetNames, IDictionary<string, Target> targets)
+    {
+        foreach (string targetName in targetNames)
+        {
+            if ( !targets.ContainsKey(targetName))
+            {
+                throw new Exception($"Target \"{(targetName.Replace("\"", "\"\""))}\" not found.");
+            }
+        }
     }
 }

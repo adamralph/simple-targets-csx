@@ -21,11 +21,7 @@ public static class SimpleTargetsTargetRunner
     private static void RunTarget(
         string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, bool color)
     {
-        Target target;
-        if (!targets.TryGetValue(name, out target))
-        {
-            throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" not found.");
-        }
+        Target target = targets[name];
 
         if (!targetsRan.Add(name))
         {
