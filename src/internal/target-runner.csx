@@ -68,9 +68,10 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        var formattedUnknownTargets = string.Join("\", \"", unknownTargets.Select(t => t.Replace("\"", "\"\"")));
-        throw new Exception((unknownTargets.Count() == 1 ? "The following target was not found: \""
-                                                         : "The following targets were not found: \"") +
-                            formattedUnknownTargets + "\".");
+        var manyTargets = unknownTargets.Count() > 1;
+        var targetsCsv = string.Join(", ", unknownTargets.Select(target => $"\"{target.Replace("\"", "\"\"")}\""));
+        var message = $"The following target{(manyTargets ? "s were": " was")} not found: {targetsCsv}.";
+        
+        throw new Exception(message);
     }
 }
