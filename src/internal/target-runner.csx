@@ -11,6 +11,8 @@ public static class SimpleTargetsTargetRunner
 {
     public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output, bool color)
     {
+        ValidateTargets(targetNames, targets);
+
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
@@ -56,5 +58,19 @@ public static class SimpleTargetsTargetRunner
 
             output.WriteLine(SuccessMessage(name, color));
         }
+    }
+
+    private static void ValidateTargets(IEnumerable<string> targetNames, IDictionary<string, Target> targets)
+    {
+        var unknownTargets = new SortedSet<string>(targetNames.Except(targets.Keys));
+        if (!unknownTargets.Any())
+        {
+            return;
+        }
+
+        var formattedUnknownTargets = string.Join("\", \"", unknownTargets.Select(t => t.Replace("\"", "\"\"")));
+        throw new Exception((unknownTargets.Count() == 1 ? "The following target was not found: \""
+                                                         : "The following targets were not found: \"") +
+                            formattedUnknownTargets + "\".");
     }
 }

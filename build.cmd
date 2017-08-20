@@ -48,6 +48,9 @@ mkdir artifacts
 
 "%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\double-dependency.csx || goto :error
 
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\check-targets-up-front.csx build notarealtarget || goto :error
+"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\tests\check-targets-up-front-two-bad-targets.csx what2 build what1 || goto :error
+
 :: exit
 goto :EOF
 :error
