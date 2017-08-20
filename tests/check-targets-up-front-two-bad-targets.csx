@@ -1,15 +1,18 @@
 #load "../artifacts/files/simple-targets.csx"
-#load "helpers/assertions.csx"
+#load "helpers/assert.csx"
+#load "helpers/record.csx"
 
 using static SimpleTargets;
 
-var wasBuildRun = false;
+// arrange
+// this script should be run with targets "what2", "build", and "what1", in that order.
+var targets = new TargetDictionary{ { "build", () => { } } };
 
-var targets = new TargetDictionary();
-targets.Add("build", () => {});
-
-// relies on the script being run with targets "what2", "build", and "what1".
 var expectedMessage = $@"The following targets were not found: ""what1"", ""what2"".";
-AssertThrowsWithMessage(
-    expectedMessage,
-    () => Run(Args, targets));
+
+// act
+var exception = Record.Exception(() => Run(Args, targets));
+
+// assert
+
+Assert.HasMessage(exception, expectedMessage);
