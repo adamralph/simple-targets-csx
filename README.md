@@ -23,7 +23,7 @@ targets.Add("default", () => Console.WriteLine("Hello, world!"));
 
 Run(Args, targets);
 ```
-* Run `"%ProgramFiles(x86)%\MSBuild\14.0\Bin\csi.exe" .\build.csx` (or use one of the other runners listed below).
+* Run `"csi.exe" .\build.csx` (see ["Runners"](#runners)).
 
 ### Usage
 
