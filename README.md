@@ -23,7 +23,7 @@ targets.Add("default", () => Console.WriteLine("Hello, world!"));
 
 Run(Args, targets);
 ```
-* Run `"csi.exe" .\build.csx` (see ["Runners"](#runners)).
+* Run `csi.exe .\build.csx` (see ["Runners"](#runners)).
 
 ### Usage
 
