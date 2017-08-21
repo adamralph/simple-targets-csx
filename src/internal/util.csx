@@ -80,14 +80,21 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
     public static string StartMessage(IList<string> targetNames, bool dryRun, bool color) =>
         Message(
             MessageType.Start,
-            $"Running {string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))}...",
+            $"Running {string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))}...",
+            dryRun,
+            color);
+
+    public static string FailureMessage(IList<string> targetNames, bool dryRun, bool color) =>
+        Message(
+            MessageType.Failure,
+            $"Failed to run {string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))}!",
             dryRun,
             color);
 
     public static string SuccessMessage(IList<string> targetNames, bool dryRun, bool color) =>
         Message(
             MessageType.Success,
-            $"{string.Join(", ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))} succeeded.",
+            $"{string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))} succeeded.",
             dryRun,
             color);
 
