@@ -35,7 +35,7 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
  {White(color)}-n          {Default(color)}Do a dry run without executing actions
  {White(color)}--no-color  {Default(color)}Disable colored output
 
-{Cyan(color)}targets: {Default(color)}A list of targets to run. If not specified, 'Default(color)' target will be run.
+{Cyan(color)}targets: {Default(color)}A list of targets to run. If not specified, 'default' target will be run.
 
 {Cyan(color)}Examples:{Default(color)}
   {BrightYellow(color)}csi.exe {Default(color)}build.csx
