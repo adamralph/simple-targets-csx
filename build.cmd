@@ -69,6 +69,10 @@ set RUNNER=".\packages\Microsoft.Net.Compilers.%CSI_VERSION%\tools\csi.exe"
 %RUNNER% .\tests\check-targets-up-front.csx build notarealtarget || goto :error
 %RUNNER% .\tests\check-targets-up-front-two-bad-targets.csx what2 build what1 || goto :error
 
+%RUNNER% .\tests\check-dependencies-up-front.csx || goto :error
+%RUNNER% .\tests\check-dependencies-up-front-two-missing-dependencies.csx || goto :error
+%RUNNER% .\tests\check-dependencies-up-front-missing-dependency-from-two-targets.csx || goto :error
+
 @echo Off
 
 :: exit
