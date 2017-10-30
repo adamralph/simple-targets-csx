@@ -5,10 +5,13 @@
 using static SimpleTargets;
 
 // arrange
-var targets = new TargetDictionary();
-targets.Add("default", DependsOn("pack", "notarealdependency"), () => { });
-targets.Add("pack", DependsOn("build", "notarealdependency"), () => { });
-targets.Add("build", () => { });
+var targets = new TargetDictionary
+{
+    { "default", DependsOn("pack", "notarealdependency"), () => { } },
+    { "pack", DependsOn("build", "notarealdependency"), () => { } },
+    { "build", () => { }},
+};
+
 var expectedMessage = @"Missing dependency detected: ""notarealdependency"", required by ""default"", ""pack""";
 
 // act
