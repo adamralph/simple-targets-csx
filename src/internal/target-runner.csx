@@ -24,7 +24,7 @@ public static class SimpleTargetsTargetRunner
     private static void RunTarget(
         string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, bool color)
     {
-        Target target = targets[name];
+        var target = targets[name];
 
         if (!targetsRan.Add(name))
         {
@@ -59,7 +59,7 @@ public static class SimpleTargetsTargetRunner
 
     private static void ValidateDependencies(IDictionary<string, Target> targets)
     {
-        var missingDependencies = new SortedDictionary<string, ISet<string>>();
+        var missingDependencies = new SortedDictionary<string, SortedSet<string>>();
 
         foreach (var targetEntry in targets)
         {
@@ -78,12 +78,11 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        var manyDependencies = missingDependencies.Count() > 1;
-        var message = $"Missing {(manyDependencies ? "dependencies" : "dependency")} detected: " +
-        string.Join(
-            "; ",
-            missingDependencies.Select(missingDependencyEntry =>
-                $@"""{missingDependencyEntry.Key.Replace("\"", "\"\"")}"", required by {string.Join(", ", missingDependencyEntry.Value.Select(target => $"\"{target.Replace("\"", "\"\"")}\""))}"));
+        var message = $"Missing {(missingDependencies.Count > 1 ? "dependencies" : "dependency")} detected: " +
+            string.Join(
+                "; ",
+                missingDependencies.Select(missingDependencyEntry =>
+                    $@"""{missingDependencyEntry.Key.Replace("\"", "\"\"")}"", required by {string.Join(", ", missingDependencyEntry.Value.Select(target => $"\"{target.Replace("\"", "\"\"")}\""))}"));
 
         throw new Exception(message);
     }
