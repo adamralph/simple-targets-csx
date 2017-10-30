@@ -15,7 +15,7 @@ public static class SimpleTargetsUtil
     private static string BrightYellow     (bool color) => color ? "\x1b[93m"  : "";
     private static string BrightMagenta    (bool color) => color ? "\x1b[95m"  : "";
 
-    private static readonly Dictionary<MessageType, Func<bool,string>> Colors = new Dictionary<MessageType, Func<bool,string>>
+    private static readonly Dictionary<MessageType, Func<bool, string>> Colors = new Dictionary<MessageType, Func<bool, string>>
     {
         { MessageType.Start,    color => White(color) },
         { MessageType.Success,  color => Green(color) },
@@ -77,26 +77,21 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
         Failure,
     }
 
+    public static string Quote(string @string) => $"\"{(@string.Replace("\"", "\"\""))}\"";
+
+    public static string Quote(IEnumerable<string> strings) => Quote(" ", strings);
+
+    public static string Quote(string delimiter, IEnumerable<string> strings) =>
+        string.Join(delimiter, strings.Select(@string => Quote(@string)));
+
     public static string StartMessage(IList<string> targetNames, bool dryRun, bool color) =>
-        Message(
-            MessageType.Start,
-            $"Running {string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))}...",
-            dryRun,
-            color);
+        Message(MessageType.Start, $"Running {Quote(targetNames)}...", dryRun, color);
 
     public static string FailureMessage(IList<string> targetNames, bool dryRun, bool color) =>
-        Message(
-            MessageType.Failure,
-            $"Failed to run {string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))}!",
-            dryRun,
-            color);
+        Message(MessageType.Failure, $"Failed to run {Quote(targetNames)}!", dryRun, color);
 
     public static string SuccessMessage(IList<string> targetNames, bool dryRun, bool color) =>
-        Message(
-            MessageType.Success,
-            $"{string.Join(" ", targetNames.Select(name => $"\"{(name.Replace("\"", "\"\""))}\""))} succeeded.",
-            dryRun,
-            color);
+        Message(MessageType.Success, $"{Quote(targetNames)} succeeded.", dryRun, color);
 
     public static string StartMessage(string targetName, bool color) =>
         Message(MessageType.Start, "Starting...", targetName, color);

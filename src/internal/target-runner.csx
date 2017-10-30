@@ -49,7 +49,7 @@ public static class SimpleTargetsTargetRunner
                 catch (Exception ex)
                 {
                     output.WriteLine(FailureMessage(name, ex, color));
-                    throw new Exception($"Target \"{(name.Replace("\"", "\"\""))}\" failed.", ex);
+                    throw new Exception($"Target {Quote(name)} failed.", ex);
                 }
             }
 
@@ -81,8 +81,8 @@ public static class SimpleTargetsTargetRunner
         var message = $"Missing {(missingDependencies.Count > 1 ? "dependencies" : "dependency")} detected: " +
             string.Join(
                 "; ",
-                missingDependencies.Select(missingDependencyEntry =>
-                    $@"""{missingDependencyEntry.Key.Replace("\"", "\"\"")}"", required by {string.Join(", ", missingDependencyEntry.Value.Select(target => $"\"{target.Replace("\"", "\"\"")}\""))}"));
+                missingDependencies.Select(missingDependency =>
+                    $@"{Quote(missingDependency.Key)}, required by {Quote(", ", missingDependency.Value.ToList())}"));
 
         throw new Exception(message);
     }
@@ -95,10 +95,7 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        var manyTargets = unknownTargets.Count() > 1;
-        var targetsCsv = string.Join(", ", unknownTargets.Select(target => $"\"{target.Replace("\"", "\"\"")}\""));
-        var message = $"The following target{(manyTargets ? "s were" : " was")} not found: {targetsCsv}.";
-
+        var message = $"The following target{(unknownTargets.Count() > 1 ? "s were" : " was")} not found: {Quote(", ", unknownTargets)}.";
         throw new Exception(message);
     }
 }
