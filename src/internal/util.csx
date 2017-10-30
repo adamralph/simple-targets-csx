@@ -112,7 +112,7 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
         $"{Cyan(color)}simple-targets{Default(color)}{White(color)}: {Default(color)}";
 
     private static string GetPrefix(string targetName, bool color) =>
-        $"{Cyan(color)}simple-targets{Default(color)}{White(color)}/{Default(color)}{Cyan(color)}{targetName.Replace(": ", ":: ")}{Default(color)}{White(color)}: {Default(color)}";
+        $"{Cyan(color)}simple-targets{Default(color)}{White(color)}/{Default(color)}{Cyan(color)}{targetName.Replace(": ", ":: ").Replace("/", "//")}{Default(color)}{White(color)}: {Default(color)}";
 
     private static string GetSuffix(bool dryRun, bool color) => dryRun ? $"{BrightMagenta(color)} (dry run){Default(color)}" : "";
 }
