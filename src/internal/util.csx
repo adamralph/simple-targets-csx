@@ -79,10 +79,8 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
 
     public static string Quote(string @string) => $"\"{(@string.Replace("\"", "\"\""))}\"";
 
-    public static string Quote(IEnumerable<string> strings) => Quote(" ", strings);
-
-    public static string Quote(string delimiter, IEnumerable<string> strings) =>
-        string.Join(delimiter, strings.Select(@string => Quote(@string)));
+    public static string Quote(IEnumerable<string> strings) =>
+        string.Join(", ", strings.Select(@string => Quote(@string)));
 
     public static string StartMessage(IList<string> targetNames, bool dryRun, bool color) =>
         Message(MessageType.Start, $"Running {Quote(targetNames)}...", dryRun, color);
