@@ -82,7 +82,7 @@ public static class SimpleTargetsTargetRunner
             string.Join(
                 "; ",
                 missingDependencies.Select(missingDependency =>
-                    $@"{Quote(missingDependency.Key)}, required by {Quote(", ", missingDependency.Value.ToList())}"));
+                    $@"{Quote(missingDependency.Key)}, required by {Quote(missingDependency.Value.ToList())}"));
 
         throw new Exception(message);
     }
@@ -95,7 +95,7 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        var message = $"The following target{(unknownTargets.Count() > 1 ? "s were" : " was")} not found: {Quote(", ", unknownTargets)}.";
+        var message = $"The following target{(unknownTargets.Count() > 1 ? "s were" : " was")} not found: {Quote(unknownTargets)}.";
         throw new Exception(message);
     }
 }
