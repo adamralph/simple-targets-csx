@@ -18,10 +18,11 @@ See the quickstart at https://github.com/adamralph/simple-targets-csx#quickstart
     <copyright>Copyright 2016</copyright>
   </metadata>
   <files>
-    <file src="internal/runner.csx"         target="internal/runner.csx" />
-    <file src="internal/target-runner.csx"  target="internal/target-runner.csx" />
-    <file src="internal/util.csx"           target="internal/util.csx" />
-    <file src="simple-targets-target.csx"   target="simple-targets-target.csx" />
-    <file src="simple-targets.csx"          target="simple-targets.csx" />
+    <file src="internal/runner.csx"                target="internal/runner.csx" />
+    <file src="internal/target-runner.csx"         target="internal/target-runner.csx" />
+    <file src="internal/target-runner-options.csx" target="internal/target-runner-options.csx" />
+    <file src="internal/util.csx"                  target="internal/util.csx" />
+    <file src="simple-targets-target.csx"          target="simple-targets-target.csx" />
+    <file src="simple-targets.csx"                 target="simple-targets.csx" />
   </files>
 </package>

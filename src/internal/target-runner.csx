@@ -1,3 +1,4 @@
+#load "target-runner-options.csx"
 #load "util.csx"
 #load "../simple-targets-target.csx"
 
@@ -9,9 +10,9 @@ using static SimpleTargetsUtil;
 
 public static class SimpleTargetsTargetRunner
 {
-    public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output, bool color, bool skipDependencies)
+    public static void Run(IList<string> targetNames, IDictionary<string, Target> targets, TextWriter output, SimpleTargetsTargetRunnerOptions options)
     {
-        if (!skipDependencies)
+        if (!options.SkipDependencies)
         {
             ValidateDependencies(targets);
         }
@@ -21,12 +22,12 @@ public static class SimpleTargetsTargetRunner
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            RunTarget(name, dryRun, targets, targetsRan, output, color, skipDependencies);
+            RunTarget(name, targets, targetsRan, output, options);
         }
     }
 
     private static void RunTarget(
-        string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, bool color, bool skipDependencies)
+        string name, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, SimpleTargetsTargetRunnerOptions options)
     {
         var target = targets[name];
 
@@ -35,19 +36,19 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        if (!skipDependencies)
+        if (!options.SkipDependencies)
         {
             foreach (var dependency in target.Dependencies)
             {
-                RunTarget(dependency, dryRun, targets, targetsRan, output, color, skipDependencies);
+                RunTarget(dependency, targets, targetsRan, output, options);
             }
         }
 
         if (target.Action != null)
         {
-            output.WriteLine(StartMessage(name, color));
+            output.WriteLine(StartMessage(name, options.Color));
 
-            if (!dryRun)
+            if (!options.DryRun)
             {
                 try
                 {
@@ -55,12 +56,12 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine(FailureMessage(name, ex, color));
+                    output.WriteLine(FailureMessage(name, ex, options.Color));
                     throw new Exception($"Target {Quote(name)} failed.", ex);
                 }
             }
 
-            output.WriteLine(SuccessMessage(name, color));
+            output.WriteLine(SuccessMessage(name, options.Color));
         }
     }
 
