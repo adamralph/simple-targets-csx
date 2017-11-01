@@ -73,6 +73,9 @@ set RUNNER=".\packages\Microsoft.Net.Compilers.%CSI_VERSION%\tools\csi.exe"
 %RUNNER% .\tests\check-dependencies-up-front-two-missing-dependencies.csx || goto :error
 %RUNNER% .\tests\check-dependencies-up-front-missing-dependency-from-two-targets.csx || goto :error
 
+%RUNNER% .\tests\skip-dependencies.csx -s || goto :error
+%RUNNER% .\tests\skip-dependencies-missing-dependency.csx -s || goto :error
+
 @echo Off
 
 :: exit

@@ -9,20 +9,24 @@ using static SimpleTargetsUtil;
 
 public static class SimpleTargetsTargetRunner
 {
-    public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output, bool color)
+    public static void Run(IList<string> targetNames, bool dryRun, IDictionary<string, Target> targets, TextWriter output, bool color, bool skipDependencies)
     {
-        ValidateDependencies(targets);
+        if (!skipDependencies)
+        {
+            ValidateDependencies(targets);
+        }
+
         ValidateTargets(targetNames, targets);
 
         var targetsRan = new HashSet<string>();
         foreach (var name in targetNames)
         {
-            RunTarget(name, dryRun, targets, targetsRan, output, color);
+            RunTarget(name, dryRun, targets, targetsRan, output, color, skipDependencies);
         }
     }
 
     private static void RunTarget(
-        string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, bool color)
+        string name, bool dryRun, IDictionary<string, Target> targets, ISet<string> targetsRan, TextWriter output, bool color, bool skipDependencies)
     {
         var target = targets[name];
 
@@ -31,9 +35,12 @@ public static class SimpleTargetsTargetRunner
             return;
         }
 
-        foreach (var dependency in target.Dependencies)
+        if (!skipDependencies)
         {
-            RunTarget(dependency, dryRun, targets, targetsRan, output, color);
+            foreach (var dependency in target.Dependencies)
+            {
+                RunTarget(dependency, dryRun, targets, targetsRan, output, color, skipDependencies);
+            }
         }
 
         if (target.Action != null)

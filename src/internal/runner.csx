@@ -17,6 +17,7 @@ public static class SimpleTargetsRunner
         var showList = false;
         var dryRun = false;
         var color = true;
+        var skipDependencies = false;
 
         foreach (var option in args.Where(arg => arg.StartsWith("-", StringComparison.Ordinal)))
         {
@@ -38,6 +39,9 @@ public static class SimpleTargetsRunner
                     break;
                 case "--no-color":
                     color = false;
+                    break;
+                case "-s":
+                    skipDependencies = true;
                     break;
                 default:
                     throw new Exception($"Unknown option '{option}'.");
@@ -72,7 +76,7 @@ public static class SimpleTargetsRunner
 
         try
         {
-            SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color);
+            SimpleTargetsTargetRunner.Run(targetNames, dryRun, targets, output, color, skipDependencies);
         }
         catch (Exception)
         {

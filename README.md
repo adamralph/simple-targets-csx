@@ -34,6 +34,7 @@ Run(Args, targets);
 | List targets                  | `{runner} .\build.csx -T`                                                           |
 | List targets and dependencies | `{runner} .\build.csx -D`                                                           |
 | Dry run                       | Append `-n`, e.g. `{runner} .\build.csx -n` or `{runner} .\build.csx targetname -n` |
+| Skip running dependencies     | Append `-s`, e.g. `{runner} .\build.csx -s` or `{runner} .\build.csx targetname -s` |
 | Show full usage details       | `{runner} .\build.csx -?`                                                           |
 
 ### Runners

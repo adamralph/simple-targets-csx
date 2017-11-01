@@ -14,4 +14,12 @@ public static class Assert
             throw new Exception($"Expected an exception with message '{expectedMessage}', but message was '{exception.Message}'.");
         }
     }
+
+    public static void IsTrue(bool condition, string message)
+    {
+        if (!condition)
+        {
+            throw new Exception($"Expected true, but was false: {message}");
+        }
+    }
 }
