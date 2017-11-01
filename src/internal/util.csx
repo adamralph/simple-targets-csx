@@ -34,6 +34,7 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
  {White(color)}-T          {Default(color)}Display the targets, then exit
  {White(color)}-n          {Default(color)}Do a dry run without executing actions
  {White(color)}--no-color  {Default(color)}Disable colored output
+ {White(color)}-s          {Default(color)}Do not run targets' dependencies
 
 {Cyan(color)}targets: {Default(color)}A list of targets to run. If not specified, 'default' target will be run.
 

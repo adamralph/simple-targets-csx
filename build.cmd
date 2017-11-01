@@ -51,6 +51,7 @@ set RUNNER=".\packages\Microsoft.Net.Compilers.%CSI_VERSION%\tools\csi.exe"
 
 %RUNNER% .\artifacts\files\internal\runner.csx || goto :error
 %RUNNER% .\artifacts\files\internal\target-runner.csx || goto :error
+%RUNNER% .\artifacts\files\internal\target-runner-options.csx || goto :error
 %RUNNER% .\artifacts\files\internal\util.csx || goto :error
 %RUNNER% .\artifacts\files\simple-targets-target.csx || goto :error
 %RUNNER% .\artifacts\files\simple-targets.csx || goto :error
@@ -72,6 +73,9 @@ set RUNNER=".\packages\Microsoft.Net.Compilers.%CSI_VERSION%\tools\csi.exe"
 %RUNNER% .\tests\check-dependencies-up-front.csx || goto :error
 %RUNNER% .\tests\check-dependencies-up-front-two-missing-dependencies.csx || goto :error
 %RUNNER% .\tests\check-dependencies-up-front-missing-dependency-from-two-targets.csx || goto :error
+
+%RUNNER% .\tests\skip-dependencies.csx -s || goto :error
+%RUNNER% .\tests\skip-dependencies-missing-dependency.csx -s || goto :error
 
 @echo Off
 
