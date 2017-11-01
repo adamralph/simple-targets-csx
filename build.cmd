@@ -49,12 +49,9 @@ set RUNNER=".\packages\Microsoft.Net.Compilers.%CSI_VERSION%\tools\csi.exe"
 
 @echo On
 
-%RUNNER% .\artifacts\files\internal\runner.csx || goto :error
-%RUNNER% .\artifacts\files\internal\target-runner.csx || goto :error
-%RUNNER% .\artifacts\files\internal\target-runner-options.csx || goto :error
-%RUNNER% .\artifacts\files\internal\util.csx || goto :error
-%RUNNER% .\artifacts\files\simple-targets-target.csx || goto :error
-%RUNNER% .\artifacts\files\simple-targets.csx || goto :error
+for /R .\artifacts\files\ %%f in (*.csx) do (
+  %RUNNER% "%%f" || goto :error
+)
 
 %RUNNER% .\tests\test.csx -? || goto :error
 %RUNNER% .\tests\test.csx -T || goto :error
