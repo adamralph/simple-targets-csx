@@ -57,7 +57,7 @@ public static class SimpleTargetsTargetRunner
                 catch (Exception ex)
                 {
                     output.WriteLine(FailureMessage(name, ex, options.Color));
-                    throw new Exception($"Target {Quote(name)} failed.", ex);
+                    throw;
                 }
             }
 
