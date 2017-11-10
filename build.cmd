@@ -30,11 +30,11 @@ if not exist %NUGET_LOCAL_DIR%\NuGet.exe (
 
 :: restore packages
 echo Restoring NuGet packages...
-%NUGET_LOCAL_DIR%\NuGet.exe restore .\packages.config -PackagesDirectory ./packages -MSBuildVersion %MSBUILD_VERSION% -Verbosity quiet
+%NUGET_LOCAL_DIR%\NuGet.exe restore .\packages.config -PackagesDirectory ./packages -MSBuildVersion %MSBUILD_VERSION% -Verbosity quiet || goto :error
 
 :: build package
 if not exist artifacts mkdir artifacts
-%NUGET_LOCAL_DIR%\NuGet.exe pack src/simple-targets-csx.nuspec -OutputDirectory artifacts
+%NUGET_LOCAL_DIR%\NuGet.exe pack src/simple-targets-csx.nuspec -OutputDirectory artifacts || goto :error
 
 :: prepare package for testing
 echo Preparing package for testing...
