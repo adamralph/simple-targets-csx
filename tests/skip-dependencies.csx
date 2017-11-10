@@ -1,4 +1,4 @@
-#load "../artifacts/files/simple-targets.csx"
+#load "../artifacts/files/contentFiles/csx/any/simple-targets.csx"
 #load "helpers/assert.csx"
 
 using static SimpleTargets;

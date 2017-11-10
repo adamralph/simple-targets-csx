@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>simple-targets-csx</id>
-    <version>5.4.0</version>
+    <version>6.0.0</version>
     <authors>Adam Ralph, simple-targets-csx contributors</authors>
     <licenseUrl>https://raw.githubusercontent.com/adamralph/simple-targets-csx/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/adamralph/simple-targets-csx</projectUrl>
@@ -16,13 +16,21 @@ In no way restricted to writing targets related to .NET projects.
 See the quickstart at https://github.com/adamralph/simple-targets-csx#quickstart</description>
     <releaseNotes>https://github.com/adamralph/simple-targets-csx/releases</releaseNotes>
     <copyright>Copyright 2016</copyright>
+    <contentFiles>
+      <files include="csx/any/internal/runner.csx" />
+      <files include="csx/any/internal/target-runner.csx" />
+      <files include="csx/any/internal/target-runner-options.csx" />
+      <files include="csx/any/internal/util.csx" />
+      <files include="csx/any/simple-targets-target.csx" />
+      <files include="csx/any/simple-targets.csx" />
+    </contentFiles>
   </metadata>
   <files>
-    <file src="internal/runner.csx"                target="internal/runner.csx" />
-    <file src="internal/target-runner.csx"         target="internal/target-runner.csx" />
-    <file src="internal/target-runner-options.csx" target="internal/target-runner-options.csx" />
-    <file src="internal/util.csx"                  target="internal/util.csx" />
-    <file src="simple-targets-target.csx"          target="simple-targets-target.csx" />
-    <file src="simple-targets.csx"                 target="simple-targets.csx" />
+    <file src="internal/runner.csx"                target="contentFiles/csx/any/internal/runner.csx" />
+    <file src="internal/target-runner.csx"         target="contentFiles/csx/any/internal/target-runner.csx" />
+    <file src="internal/target-runner-options.csx" target="contentFiles/csx/any/internal/target-runner-options.csx" />
+    <file src="internal/util.csx"                  target="contentFiles/csx/any/internal/util.csx" />
+    <file src="simple-targets-target.csx"          target="contentFiles/csx/any/simple-targets-target.csx" />
+    <file src="simple-targets.csx"                 target="contentFiles/csx/any/simple-targets.csx" />
   </files>
 </package>
