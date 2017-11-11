@@ -49,6 +49,8 @@ set RUNNER=".\packages\Microsoft.Net.Compilers.%CSI_VERSION%\tools\csi.exe"
 
 @echo On
 
+%RUNNER% .\tests\message-tests.csx || goto :error
+
 for /R .\artifacts\files\ %%f in (*.csx) do (
   %RUNNER% "%%f" || goto :error
 )

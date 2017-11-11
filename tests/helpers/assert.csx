@@ -22,4 +22,12 @@ public static class Assert
             throw new Exception($"Expected true, but was false: {message}");
         }
     }
+
+    public static void Contains(string expectedSubstring, string actualString)
+    {
+        if (actualString.IndexOf(expectedSubstring, StringComparison.CurrentCulture) < 0)
+        {
+            throw new Exception($"Expected \"{actualString}\" to contain \"{expectedSubstring}\"");
+        }
+    }
 }
