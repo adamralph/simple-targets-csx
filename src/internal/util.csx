@@ -148,7 +148,7 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
         // minutes and seconds
         if (milliseconds < 3600000d)
         {
-            var minutes = (milliseconds / 60000d).ToString("F0", CultureInfo.InvariantCulture);
+            var minutes = Math.Floor(milliseconds / 60000d).ToString("F0", CultureInfo.InvariantCulture);
             var seconds = ((milliseconds % 60000d) / 1000d).ToString("F0", CultureInfo.InvariantCulture);
             return seconds == "0"
                 ? minutes + " min"
