@@ -46,7 +46,8 @@ public static class SimpleTargetsTargetRunner
 
         if (target.Action != null)
         {
-            output.WriteLine(StartMessage(name, options.Color));
+            output.WriteLine(StartMessage(name, options.DryRun, options.Color));
+            var stopWatch = Stopwatch.StartNew();
 
             if (!options.DryRun)
             {
@@ -56,12 +57,12 @@ public static class SimpleTargetsTargetRunner
                 }
                 catch (Exception ex)
                 {
-                    output.WriteLine(FailureMessage(name, ex, options.Color));
+                    output.WriteLine(FailureMessage(name, ex, options.DryRun, options.Color, stopWatch.Elapsed.TotalMilliseconds));
                     throw;
                 }
             }
 
-            output.WriteLine(SuccessMessage(name, options.Color));
+            output.WriteLine(SuccessMessage(name, options.DryRun, options.Color, stopWatch.Elapsed.TotalMilliseconds));
         }
     }
 

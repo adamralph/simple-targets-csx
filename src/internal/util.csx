@@ -1,6 +1,7 @@
 #load "../simple-targets-target.csx"
 
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using static SimpleTargets;
@@ -9,6 +10,7 @@ public static class SimpleTargetsUtil
 {
     private static string Default          (bool color) => color ? "\x1b[0m"   : "";
     private static string Green            (bool color) => color ? "\x1b[32m"  : "";
+    private static string Magenta          (bool color) => color ? "\x1b[35m"  : "";
     private static string Cyan             (bool color) => color ? "\x1b[36m"  : "";
     private static string White            (bool color) => color ? "\x1b[37m"  : "";
     private static string BrightRed        (bool color) => color ? "\x1b[91m"  : "";
@@ -84,28 +86,28 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
         string.Join(", ", strings.Select(@string => Quote(@string)));
 
     public static string StartMessage(IList<string> targetNames, bool dryRun, bool color) =>
-        Message(MessageType.Start, $"Running {Quote(targetNames)}...", dryRun, color);
+        Message(MessageType.Start, $"Running {Quote(targetNames)}...", dryRun, color, null);
 
-    public static string FailureMessage(IList<string> targetNames, bool dryRun, bool color) =>
-        Message(MessageType.Failure, $"Failed to run {Quote(targetNames)}!", dryRun, color);
+    public static string FailureMessage(IList<string> targetNames, bool dryRun, bool color, double elapsedMilliseconds) =>
+        Message(MessageType.Failure, $"Failed to run {Quote(targetNames)}!", dryRun, color, elapsedMilliseconds);
 
-    public static string SuccessMessage(IList<string> targetNames, bool dryRun, bool color) =>
-        Message(MessageType.Success, $"{Quote(targetNames)} succeeded.", dryRun, color);
+    public static string SuccessMessage(IList<string> targetNames, bool dryRun, bool color, double elapsedMilliseconds) =>
+        Message(MessageType.Success, $"{Quote(targetNames)} succeeded.", dryRun, color, elapsedMilliseconds);
 
-    public static string StartMessage(string targetName, bool color) =>
-        Message(MessageType.Start, "Starting...", targetName, color);
+    public static string StartMessage(string targetName, bool dryRun, bool color) =>
+        Message(MessageType.Start, "Starting...", targetName, dryRun, color, null);
 
-    public static string FailureMessage(string targetName, Exception ex, bool color) =>
-        Message(MessageType.Failure, $"Failed! {ex.Message}", targetName, color);
+    public static string FailureMessage(string targetName, Exception ex, bool dryRun, bool color, double elapsedMilliseconds) =>
+        Message(MessageType.Failure, $"Failed! {ex.Message}", targetName, dryRun, color, elapsedMilliseconds);
 
-    public static string SuccessMessage(string targetName, bool color) =>
-        Message(MessageType.Success, "Succeeded.", targetName, color);
+    public static string SuccessMessage(string targetName, bool dryRun, bool color, double elapsedMilliseconds) =>
+        Message(MessageType.Success, "Succeeded.", targetName, dryRun, color, elapsedMilliseconds);
 
-    private static string Message(MessageType messageType, string text, bool dryRun, bool color) =>
-        $"{GetPrefix(color)}{Colors[messageType](color)}{text}{Default(color)}{GetSuffix(dryRun, color)}";
+    private static string Message(MessageType messageType, string text, bool dryRun, bool color, double? elapsedMilliseconds) =>
+        $"{GetPrefix(color)}{Colors[messageType](color)}{text}{Default(color)}{GetSuffix(messageType, false, dryRun, color, elapsedMilliseconds)}";
 
-    private static string Message(MessageType messageType, string text, string targetName, bool color) =>
-        $"{GetPrefix(targetName, color)}{Colors[messageType](color)}{text}{Default(color)}";
+    private static string Message(MessageType messageType, string text, string targetName, bool dryRun, bool color, double? elapsedMilliseconds) =>
+        $"{GetPrefix(targetName, color)}{Colors[messageType](color)}{text}{Default(color)}{GetSuffix(messageType, true, dryRun, color, elapsedMilliseconds)}";
 
     private static string GetPrefix(bool color) =>
         $"{Cyan(color)}simple-targets{Default(color)}{White(color)}: {Default(color)}";
@@ -113,5 +115,47 @@ $@"{Cyan(color)}Usage: {Default(color)}{BrightYellow(color)}<script-runner> {Def
     private static string GetPrefix(string targetName, bool color) =>
         $"{Cyan(color)}simple-targets{Default(color)}{White(color)}/{Default(color)}{Cyan(color)}{targetName.Replace(": ", ":: ").Replace("/", "//")}{Default(color)}{White(color)}: {Default(color)}";
 
-    private static string GetSuffix(bool dryRun, bool color) => dryRun ? $"{BrightMagenta(color)} (dry run){Default(color)}" : "";
+    private static string GetSuffix(MessageType messageType, bool singleTarget, bool dryRun, bool color, double? elapsedMilliseconds) =>
+        (!singleTarget && dryRun ? $"{BrightMagenta(color)} (dry run){Default(color)}" : "") +
+            (!dryRun && elapsedMilliseconds.HasValue ? $"{Magenta(color)} ({ToStringFromMilliseconds(elapsedMilliseconds.Value)}){Default(color)}" : "");
+
+    public static string ToStringFromMilliseconds(double milliseconds)
+    {
+        // nanoseconds
+        if (milliseconds < 0.001d)
+        {
+            return (milliseconds * 1000000d).ToString("G3", CultureInfo.InvariantCulture) + " ns";
+        }
+
+        // microseconds
+        if (milliseconds < 1d)
+        {
+            return (milliseconds * 1000d).ToString("G3", CultureInfo.InvariantCulture) + " \u00B5s"; // µs
+        }
+
+        // milliseconds
+        if (milliseconds < 1000d)
+        {
+            return milliseconds.ToString("G3", CultureInfo.InvariantCulture) + " ms";
+        }
+
+        // seconds
+        if (milliseconds < 60000d)
+        {
+            return (milliseconds / 1000d).ToString("G3", CultureInfo.InvariantCulture) + " s";
+        }
+
+        // minutes and seconds
+        if (milliseconds < 3600000d)
+        {
+            var minutes = (milliseconds / 60000d).ToString("F0", CultureInfo.InvariantCulture);
+            var seconds = ((milliseconds % 60000d) / 1000d).ToString("F0", CultureInfo.InvariantCulture);
+            return seconds == "0"
+                ? minutes + " min"
+                : string.Concat(minutes, " min ", seconds, " s");
+        }
+
+        // minutes
+        return (milliseconds / 60000d).ToString("N0", CultureInfo.InvariantCulture) + " min";
+    }
 }
