@@ -1,3 +1,5 @@
+**This project is no longer maintained. If you would like to take it over, please raise an issue or contact the owners of the NuGet package via the NuGet gallery.**
+
 ![Icon](/assets/simple-targets-csx.png)
 
 # simple-targets-csx
