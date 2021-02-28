@@ -1,7 +1,5 @@
 **This project has been replaced by [Bullseye](https://github.com/adamralph/bullseye). It is recommended to migrate your targets from simple-targets-csx to Bullseye.**
 
-**This project is no longer maintained. If you would like to take it over, please raise an issue or contact the owners of the NuGet package via the NuGet gallery.**
-
 ![Icon](/assets/simple-targets-csx.png)
 
 # simple-targets-csx
